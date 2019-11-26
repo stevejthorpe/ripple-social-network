@@ -1,7 +1,18 @@
+/* https://colorhunt.co/palette/33990
+#f7fbfc
+#d6e6f2
+#b9d7ea
+#769fcd */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 
-    background: hotpink;
+    background: #f7fbfc;
+}
+
+.welcome-logo {
+    height: 200;
+    width: auto;
 }

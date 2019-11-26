@@ -14,7 +14,7 @@ exports.addUser = function(
 ) {
     console.log("In db.addUser");
     return db.query(
-        "INSERT INTO users (image_id, firstname, lastname, email, bio, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id",
-        [image_id, firstname, lastname, email, bio, password]
+        "INSERT INTO users (firstname, lastname, email, bio, password) VALUES ($1, $2, $3, $4, $5)",
+        [firstname, lastname, email, bio, password]
     );
 };

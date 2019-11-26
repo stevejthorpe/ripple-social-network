@@ -10,7 +10,7 @@ export default class Register extends React.Component {
     submit() {
         axios
             .post("/register", {
-                image_id: this.state.image_id,
+                // image_id: this.state.image_id,
                 firstname: this.state.firstname,
                 lastname: this.state.lastname,
                 email: this.state.email,
@@ -42,30 +42,43 @@ export default class Register extends React.Component {
             [inputElement.name]: inputElement.value
         });
     }
+    // <label></label>
 
     render() {
         return (
-            <div>
+            <form className="reg-form">
                 {this.state.error && <div className="error">Ooops!</div>}
                 <input
                     name="firstname"
+                    autoComplete="firtname"
                     onChange={e => this.handleChange(e.target)}
                 />
                 <input
                     name="lastname"
+                    autoComplete="lastname"
                     onChange={e => this.handleChange(e.target)}
                 />
                 <input
+                    type="email"
+                    autoComplete="email"
                     name="email"
                     onChange={e => this.handleChange(e.target)}
                 />
-                <input name="bio" onChange={e => this.handleChange(e.target)} />
                 <input
+                    autoComplete="biography"
+                    name="bio"
+                    onChange={e => this.handleChange(e.target)}
+                />
+                <input
+                    type="password"
+                    autoComplete="new-password"
                     name="password"
                     onChange={e => this.handleChange(e.target)}
                 />
                 <button onClick={() => this.submit()}>Register</button>
-            </div>
+
+                <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+            </form>
         );
     }
 }
