@@ -4,7 +4,7 @@ const compression = require("compression"); // Compress text files gzip
 const cookieSession = require("cookie-session");
 const db = require("./utils/db");
 const helmet = require("helmet");
-const csurf = require("csurf");
+// const csurf = require("csurf");
 const { hash, compare } = require("./utils/bc");
 
 app.use(compression());
@@ -28,7 +28,7 @@ app.use(
 
 app.use(helmet());
 
-app.use(csurf());
+// app.use(csurf());
 
 // app.use(function(req, res, next) {
 //     res.locals.csrfToken = req.csrfToken();
@@ -63,14 +63,30 @@ app.post("/register", (req, res) => {
 
     console.log("POST /register: ", req.body);
 
-    return db
-        .addUser(firstname, lastname, email, bio, password)
-        .then(data => {
-            console.log("POST /register success!!");
-            console.log("POST /register data: ", data);
+    hash(password)
+        .then(hashedPassword => {
+            console.log("hashed pw: ", hashedPassword);
+
+            db.addUser(firstname, lastname, email, bio, hashedPassword)
+                .then(data => {
+                    console.log("POST /register success!!");
+                    console.log("POST /register data: ", data);
+
+                    req.session.userId = data.rows[0].id;
+
+                    console.log("hash addUser userId: ", req.session.userId);
+
+                    req.session.firstname = firstname;
+                    req.session.lastname = lastname;
+
+                    // res.redirect('/profile');
+                })
+                .catch(err => {
+                    console.log("Error in POST /register: ", err);
+                });
         })
         .catch(err => {
-            console.log("Error in POST /register: ", err);
+            console.log("Error in hash pw: ", err);
         });
 });
 

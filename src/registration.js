@@ -76,9 +76,8 @@ export default class Register extends React.Component {
                     onChange={e => this.handleChange(e.target)}
                 />
                 <button onClick={() => this.submit()}>Register</button>
-
-                <input type="hidden" name="_csrf" value="{{csrfToken}}" />
             </form>
         );
     }
 }
+// <input type="hidden" name="_csrf" value="{{csrfToken}}" />
