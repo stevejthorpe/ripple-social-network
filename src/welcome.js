@@ -13,9 +13,12 @@ export default class Welcome extends React.Component {
                 <img className="welcome-logo" src="/logo.png" alt="logo" />
                 <p>Throw a pebble in the pond and make a ripple...</p>
                 <h3>Register now.</h3>
-                <div>
-                    <Register />
-                </div>
+
+                <Register />
+
+                <p>
+                    Already a member? <a href="/login">Login</a>
+                </p>
             </div>
         );
     }

@@ -7,6 +7,9 @@ const helmet = require("helmet");
 // const csurf = require("csurf");
 const { hash, compare } = require("./utils/bc");
 
+///////////////
+// Middlewar //
+///////////////
 app.use(compression());
 app.use(express.json());
 app.use(express.static("./public"));
@@ -46,6 +49,10 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
+////////////
+// Routes //
+////////////
+
 app.get("/welcome", function(req, res) {
     if (req.session.userId) {
         res.redirect("/");
@@ -55,34 +62,37 @@ app.get("/welcome", function(req, res) {
 });
 
 app.post("/register", (req, res) => {
-    let firstname = req.body.firstname;
-    let lastname = req.body.lastname;
-    let email = req.body.email;
-    let bio = req.body.bio;
-    let password = req.body.password;
-
-    console.log("POST /register: ", req.body);
-
-    hash(password)
+    hash(req.body.password)
         .then(hashedPassword => {
             console.log("hashed pw: ", hashedPassword);
 
-            db.addUser(firstname, lastname, email, bio, hashedPassword)
+            return db
+                .addUser(
+                    req.body.firstname,
+                    req.body.lastname,
+                    req.body.email,
+                    req.body.bio,
+                    hashedPassword
+                )
                 .then(data => {
                     console.log("POST /register success!!");
-                    console.log("POST /register data: ", data);
+                    console.log("POST /register data: ", data.rows);
 
                     req.session.userId = data.rows[0].id;
 
                     console.log("hash addUser userId: ", req.session.userId);
 
-                    req.session.firstname = firstname;
-                    req.session.lastname = lastname;
+                    res.json({
+                        success: true
+                    });
 
                     // res.redirect('/profile');
                 })
                 .catch(err => {
                     console.log("Error in POST /register: ", err);
+                    res.json({
+                        success: false
+                    });
                 });
         })
         .catch(err => {
