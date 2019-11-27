@@ -4,12 +4,12 @@ const compression = require("compression"); // Compress text files gzip
 const cookieSession = require("cookie-session");
 const db = require("./utils/db");
 const helmet = require("helmet");
-// const csurf = require("csurf");
+const csurf = require("csurf");
 const { hash, compare } = require("./utils/bc");
 
-///////////////
-// Middlewar //
-///////////////
+////////////////
+// Middleware //
+////////////////
 app.use(compression());
 app.use(express.json());
 app.use(express.static("./public"));
@@ -31,12 +31,21 @@ app.use(
 
 app.use(helmet());
 
-// app.use(csurf());
+app.use(csurf());
+
+app.use(function(req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 // app.use(function(req, res, next) {
 //     res.locals.csrfToken = req.csrfToken();
 //     next();
 // });
+
+/////////////////
+// Environment //
+/////////////////
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -76,7 +85,7 @@ app.post("/register", (req, res) => {
                 )
                 .then(data => {
                     console.log("POST /register success!!");
-                    console.log("POST /register data: ", data.rows);
+                    console.log("data in addUser: ", data);
 
                     req.session.userId = data.rows[0].id;
 
@@ -86,7 +95,7 @@ app.post("/register", (req, res) => {
                         success: true
                     });
 
-                    // res.redirect('/profile');
+                    // res.redirect("/");
                 })
                 .catch(err => {
                     console.log("Error in POST /register: ", err);
@@ -100,12 +109,60 @@ app.post("/register", (req, res) => {
         });
 });
 
+app.get("/login", (req, res) => {
+    console.log("in login");
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        res.sendFile(__dirname + "/index.html");
+    }
+});
+
+app.post("/login", (req, res) => {
+    // let email = req.body.email;
+
+    // console.log(req.body.email);
+    // console.log('Body: ', req.body);
+
+    if (req.body.password == 0 || req.body.email == 0) {
+        res.redirect("/login");
+    }
+
+    return db
+        .getUser(req.body.email)
+        .then(data => {
+            let password = req.body.password;
+
+            let hashedPassword = data.rows[0].password;
+            let userId = data.rows[0].id;
+
+            compare(password, hashedPassword)
+                .then(data => {
+                    if (data === true) {
+                        req.session.authenticated = true;
+                        req.session.userId = userId;
+                    }
+                })
+                .catch(err => {
+                    console.log("Error in compare pw: ", err);
+                });
+        })
+        .catch(err => {
+            console.log("Error in POST /login: ", err);
+        });
+});
+
 app.get("*", function(req, res) {
     if (!req.session.userId) {
         res.redirect("/welcome");
     } else {
         res.sendFile(__dirname + "/index.html");
     }
+});
+
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/");
 });
 
 app.listen(8080, function() {

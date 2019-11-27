@@ -11,3 +11,13 @@ exports.addUser = function(firstname, lastname, email, bio, password) {
         [firstname, lastname, email, bio, password]
     );
 };
+
+exports.getUser = function(email) {
+    console.log("Email inside getUser: ", email);
+    return db.query(
+        `SELECT id, firstname, lastname, email, password
+         FROM users
+         WHERE email = $1`,
+        [email]
+    );
+};
