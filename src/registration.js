@@ -23,7 +23,7 @@ export default class Register extends React.Component {
             .then(({ data }) => {
                 console.log("POST /register data: ", data);
                 if (data.success) {
-                    // Something
+                    // Redirect | Login
                     console.log("POST to registration success");
                     location.replace("/");
                 } else {
@@ -39,18 +39,26 @@ export default class Register extends React.Component {
                 };
             });
     }
-
     handleChange(inputElement) {
         this.setState({
             [inputElement.name]: inputElement.value
         });
     }
+    // handleChange({ target }) {
+    //     this.setState({
+    //         [target.name]: target.value
+    //     });
+    // }
     render() {
         return (
             <div>
                 <h3>Register now.</h3>
                 <form className="reg-form">
-                    {this.state.error && <div className="error">Ooops!</div>}
+                    {this.state.error && (
+                        <p className="error">
+                            Ooops! Something went wrong. Please try again.
+                        </p>
+                    )}
                     <label htmlFor="firstname">
                         Firstname:
                         <input

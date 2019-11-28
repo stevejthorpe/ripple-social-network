@@ -38,11 +38,6 @@ app.use(function(req, res, next) {
     next();
 });
 
-// app.use(function(req, res, next) {
-//     res.locals.csrfToken = req.csrfToken();
-//     next();
-// });
-
 /////////////////
 // Environment //
 /////////////////
@@ -70,6 +65,7 @@ app.get("/welcome", function(req, res) {
     }
 });
 
+// REGISTER //
 app.post("/register", (req, res) => {
     hash(req.body.password)
         .then(hashedPassword => {
@@ -100,7 +96,8 @@ app.post("/register", (req, res) => {
                 .catch(err => {
                     console.log("Error in POST /register: ", err);
                     res.json({
-                        success: false
+                        success: false,
+                        error: true
                     });
                 });
         })
@@ -109,6 +106,7 @@ app.post("/register", (req, res) => {
         });
 });
 
+// LOGIN //
 app.get("/login", (req, res) => {
     console.log("in login");
     if (req.session.userId) {
@@ -139,16 +137,31 @@ app.post("/login", (req, res) => {
             compare(password, hashedPassword)
                 .then(data => {
                     if (data === true) {
+                        console.log("PW Match");
                         req.session.authenticated = true;
                         req.session.userId = userId;
+                        res.json({
+                            success: true
+                        });
+                    } else {
+                        console.log("PW No Match");
+                        res.json({
+                            success: false
+                        });
                     }
                 })
                 .catch(err => {
                     console.log("Error in compare pw: ", err);
+                    res.json({
+                        success: false
+                    });
                 });
         })
         .catch(err => {
             console.log("Error in POST /login: ", err);
+            res.json({
+                success: false
+            });
         });
 });
 
@@ -160,6 +173,7 @@ app.get("*", function(req, res) {
     }
 });
 
+// LOGOUT //
 app.get("/logout", (req, res) => {
     req.session = null;
     res.redirect("/");

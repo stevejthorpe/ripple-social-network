@@ -7,7 +7,8 @@ export default class Login extends React.Component {
         super(props);
         this.state = {};
     }
-    submit() {
+    submit(e) {
+        e.preventDefault();
         axios
             .post("/login", {
                 email: this.state.email,
@@ -16,9 +17,20 @@ export default class Login extends React.Component {
             .then(({ data }) => {
                 console.log("In POST /login");
                 console.log("POST /login data: ", data);
+                if (data.success) {
+                    console.log("login worked | redirect to /");
+                    location.replace("/");
+                } else {
+                    this.setState({
+                        error: true
+                    });
+                }
             })
             .catch(err => {
                 console.log("Error in POST /login: ", err);
+                this.setState = {
+                    error: true
+                };
             });
     }
     handleChange(inputElement) {
@@ -26,11 +38,21 @@ export default class Login extends React.Component {
             [inputElement.name]: inputElement.value
         });
     }
+    // handleChange({ target }) {
+    //     this.setState({
+    //         [target.name]: target.value
+    //     });
+    // }
     render() {
         return (
             <div>
-                <h1>I am the login</h1>
-                <Link to="/">Take me to registration</Link>
+                <h3>login</h3>
+                {this.state.error && (
+                    <p className="error">
+                        Oops, something went wrong. Please try again.
+                    </p>
+                )}
+
                 <form>
                     <label htmlFor="email">
                         Email:
@@ -51,15 +73,18 @@ export default class Login extends React.Component {
                         />
                     </label>
                     <button
-                        className="ripple"
-                        onClick={e => {
-                            e.preventDefault();
+                        onClick={() => {
                             this.submit();
                         }}
                     >
                         Login
                     </button>
                 </form>
+                <div>
+                    <p>
+                        Take me back to <Link to="/">registration</Link>
+                    </p>
+                </div>
             </div>
         );
     }
