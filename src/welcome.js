@@ -1,6 +1,5 @@
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Register from "./registration";
 import Login from "./login";
 

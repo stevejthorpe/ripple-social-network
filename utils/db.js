@@ -15,9 +15,40 @@ exports.addUser = function(firstname, lastname, email, bio, password) {
 exports.getUser = function(email) {
     console.log("Email inside getUser: ", email);
     return db.query(
-        `SELECT id, password
+        `SELECT *
          FROM users
          WHERE email = $1`,
         [email]
+    );
+};
+
+exports.getUserData = function(userId) {
+    console.log("In getUserData");
+    return db.query(
+        `SELECT *
+        FROM users
+        WHERE id = $1`,
+        [userId]
+    );
+};
+
+exports.addImageUrl = function(imageUrl, userId) {
+    console.log("inside addImageUrl: ", imageUrl, userId);
+    return db.query(
+        `UPDATE users
+        SET image = $1
+        WHERE id = $2`,
+        [imageUrl, userId]
+    );
+};
+
+exports.addBio = function(bio, userId) {
+    console.log("inside addBio: ", bio, userId);
+    return db.query(
+        `UPDATE users
+        SET bio = $1
+        WHERE id = $2
+        RETURNING bio`,
+        [bio, userId]
     );
 };

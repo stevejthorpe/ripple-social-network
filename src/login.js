@@ -7,8 +7,14 @@ export default class Login extends React.Component {
         super(props);
         this.state = {};
     }
-    submit(e) {
-        e.preventDefault();
+    submit() {
+        // e.preventDefault();
+
+        console.log(this.email);
+        console.log(this.first);
+        console.log(this.last);
+        console.log(this.password);
+
         axios
             .post("/login", {
                 email: this.state.email,
@@ -19,8 +25,9 @@ export default class Login extends React.Component {
                 console.log("POST /login data: ", data);
                 if (data.success) {
                     console.log("login worked | redirect to /");
-                    location.replace("/");
+                    location.replace("/"); // Replace history, cant go back.
                 } else {
+                    console.log("Error in login | POST/login");
                     this.setState({
                         error: true
                     });
@@ -53,7 +60,7 @@ export default class Login extends React.Component {
                     </p>
                 )}
 
-                <form>
+                <form className="login-form">
                     <label htmlFor="email">
                         Email:
                         <input

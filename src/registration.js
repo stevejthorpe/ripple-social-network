@@ -9,8 +9,8 @@ export default class Register extends React.Component {
         this.state = {};
     }
 
-    submit(e) {
-        e.preventDefault();
+    submit() {
+        // e.preventDefault();
         axios
             .post("/register", {
                 // image_id: this.state.image_id,

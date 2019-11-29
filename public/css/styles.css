@@ -44,7 +44,8 @@ p.error {
     height: auto;
 }
 
-.reg-form {
+.reg-form,
+.login-form {
     display: flex;
     flex-direction: column;
 
