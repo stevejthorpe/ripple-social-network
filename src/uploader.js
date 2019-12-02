@@ -4,7 +4,8 @@ import axios from "./axios";
 export default class Uploader extends React.Component {
     constructor(props) {
         super(props);
-        console.log("props | Uploader: ", props), (this.state = {});
+        console.log("props | Uploader: ", props);
+        this.state = {};
         this.handleChange = this.handleChange.bind(this);
         this.submitImg = this.submitImg.bind(this);
     }
@@ -34,7 +35,7 @@ export default class Uploader extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className="uploader">
                 <h3>This is the uploader</h3>
                 <input
                     type="file"

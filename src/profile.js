@@ -7,10 +7,7 @@ import { BioEditor } from "./bio-editor";
 export function Profile(props) {
     console.log("props in profile: ", props);
     return (
-        <div>
-            <h1>
-                I am the profile component! {props.firstname} {props.lastname}
-            </h1>
+        <div className="profile">
             <ProfilePic
                 firstname={props.firstname}
                 lastname={props.lastname}

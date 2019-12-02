@@ -83,8 +83,8 @@ export class BioEditor extends React.Component {
         } else {
             return (
                 <div>
-                    <h1>I am the BioEditor component</h1>
-                    <p>{this.props.bio}</p>
+                    <h3>Biography</h3>
+                    <p className="bio-box">{this.props.bio}</p>
                     <button onClick={this.toggleEditingMode}>
                         {this.state.buttonText}
                     </button>

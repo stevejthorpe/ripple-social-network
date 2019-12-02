@@ -1,8 +1,11 @@
 import React from "react";
 import axios from "./axios";
+import { BrowserRouter, Route } from "react-router-dom";
 import ProfilePic from "./profile-pic";
 import Uploader from "./uploader";
 import { Profile } from "./profile";
+import Header from "./header";
+import { OtherProfile } from "./otherprofile";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -15,7 +18,7 @@ export default class App extends React.Component {
         this.setBio = this.setBio.bind(this);
     }
     async componentDidMount() {
-        let { data } = await axios.get("/user");
+        let { data } = await axios.get("/user.json");
         console.log("App | getUserData: ", data);
         let { id, image, firstname, lastname, email, bio } = data;
         this.setState(
@@ -75,23 +78,34 @@ export default class App extends React.Component {
         }
         return (
             <div>
-                <h2>This is the app component</h2>
-                <ProfilePic
-                    firstname={this.state.firstname}
-                    lastname={this.state.lastname}
-                    imageUrl={this.state.imageUrl}
-                    toggleUploader={this.toggleUploader}
-                />
+                <BrowserRouter>
+                    <Header
+                        id={this.state.id}
+                        imageUrl={this.state.imageUrl}
+                        firstname={this.state.firstname}
+                        lastname={this.state.lastname}
+                        toggleUploader={this.toggleUploader}
+                    />
 
-                <Profile
-                    id={this.state.id}
-                    imageUrl={this.state.imageUrl}
-                    firstname={this.state.firstname}
-                    lastname={this.state.lastname}
-                    bio={this.state.bio}
-                    toggleUploader={this.toggleUploader}
-                    setBio={this.setBio}
-                />
+                    <div>
+                        <Route
+                            exact
+                            path="/"
+                            render={() => (
+                                <Profile
+                                    id={this.state.id}
+                                    imageUrl={this.state.imageUrl}
+                                    firstname={this.state.firstname}
+                                    lastname={this.state.lastname}
+                                    bio={this.state.bio}
+                                    toggleUploader={this.toggleUploader}
+                                    setBio={this.setBio}
+                                />
+                            )}
+                        />
+                        <Route path="/user/:id" component={OtherProfile} />
+                    </div>
+                </BrowserRouter>
 
                 {this.state.uploaderIsVisible && (
                     <Uploader updateImg={this.updateImg} />
@@ -100,3 +114,20 @@ export default class App extends React.Component {
         );
     }
 }
+
+// <Profile
+//     id={this.state.id}
+//     imageUrl={this.state.imageUrl}
+//     firstname={this.state.firstname}
+//     lastname={this.state.lastname}
+//     bio={this.state.bio}
+//     toggleUploader={this.toggleUploader}
+//     setBio={this.setBio}
+// />
+//
+// <ProfilePic
+//     firstname={this.state.firstname}
+//     lastname={this.state.lastname}
+//     imageUrl={this.state.imageUrl}
+//     toggleUploader={this.toggleUploader}
+// />

@@ -22,6 +22,17 @@ exports.getUser = function(email) {
     );
 };
 
+exports.getUserProfile = function(profileId) {
+    console.log("profileId in getUserProfile: ", profileId);
+
+    return db.query(
+        `SELECT *
+        FROM users
+        WHERE id = $1`,
+        [profileId]
+    );
+};
+
 exports.getUserData = function(userId) {
     console.log("In getUserData");
     return db.query(

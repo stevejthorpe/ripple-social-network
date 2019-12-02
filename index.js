@@ -228,7 +228,7 @@ app.post("/login", async (req, res) => {
 // });
 
 // USER //
-app.get("/user", (req, res) => {
+app.get("/user.json", (req, res) => {
     console.log("POST/user route");
     return db
         .getUserData(req.session.userId)
@@ -240,6 +240,36 @@ app.get("/user", (req, res) => {
             console.log("Error in POST / user: ", err);
         });
 });
+
+// USER PROFILE //
+app.get("/api/user/:id", (req, res) => {
+    console.log("GET/user/:id route");
+    console.log("req.params.id: ", req.params.id);
+    return db
+        .getUserProfile(req.params.id)
+        .then(({ rows }) => {
+            console.log("POST /user/:id data: ", rows);
+            res.json({ user: rows[0], id: req.session.userId });
+        })
+        .catch(err => {
+            console.log("Error in POST / user: ", err);
+        });
+});
+
+// app.get("/user/:id", (req, res) => {
+//     console.log("GET/userprofile");
+//     console.log("GET/userprofile req.body: ", req.body);
+//     console.log("req.params.id: ", req.params.id);
+//     return db
+//         .getUserProfile()
+//         .then(data => {
+//             console.log("GET | getUserProfile data: ", data.rows[0]);
+//             res.json(data.rows[0]);
+//         })
+//         .catch(err => {
+//             console.log("Error | getUserProfile: ", err);
+//         });
+// });
 
 // IMAGE UPLOAD //
 app.post("/upload", uploader.single("file"), s3.upload, async (req, res) => {

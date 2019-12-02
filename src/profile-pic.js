@@ -10,9 +10,14 @@ export default function ProfilePic({
     return (
         <div>
             <h3>
-                This is the Profile Pic of {firstname} {lastname}
+                Profile Pic :: {firstname} {lastname}
             </h3>
-            <img src={imageUrl} alt="profile pic" onClick={toggleUploader} />
+            <img
+                src={imageUrl}
+                alt="profile pic"
+                onClick={toggleUploader}
+                className="profile-pic-medium"
+            />
         </div>
     );
 }
