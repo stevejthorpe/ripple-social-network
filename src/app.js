@@ -2,6 +2,7 @@ import React from "react";
 import axios from "./axios";
 import { BrowserRouter, Route } from "react-router-dom";
 import ProfilePic from "./profile-pic";
+import FindPeople from "./findpeople";
 import Uploader from "./uploader";
 import { Profile } from "./profile";
 import Header from "./header";
@@ -92,17 +93,20 @@ export default class App extends React.Component {
                             exact
                             path="/"
                             render={() => (
-                                <Profile
-                                    id={this.state.id}
-                                    imageUrl={this.state.imageUrl}
-                                    firstname={this.state.firstname}
-                                    lastname={this.state.lastname}
-                                    bio={this.state.bio}
-                                    toggleUploader={this.toggleUploader}
-                                    setBio={this.setBio}
-                                />
+                                <>
+                                    <Profile
+                                        id={this.state.id}
+                                        imageUrl={this.state.imageUrl}
+                                        firstname={this.state.firstname}
+                                        lastname={this.state.lastname}
+                                        bio={this.state.bio}
+                                        toggleUploader={this.toggleUploader}
+                                        setBio={this.setBio}
+                                    />
+                                </>
                             )}
                         />
+                        <Route path="/users" render={() => <FindPeople />} />
                         <Route path="/user/:id" component={OtherProfile} />
                     </div>
                 </BrowserRouter>

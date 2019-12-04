@@ -12,6 +12,17 @@ export class BioEditor extends React.Component {
         this.submitBio = this.submitBio.bind(this);
         this.toggleEditingMode = this.toggleEditingMode.bind(this);
     }
+    // static getDerivedStateFromProps(props) {
+    //     if (!props.bio) {
+    //         return {
+    //             buttonText: "Add your bio"
+    //         };
+    //     } else {
+    //         return {
+    //             buttonText: "Edit your bio"
+    //         };
+    //     }
+    // }
     componentDidMount() {
         console.log("componentDidMount bioEditor: ", this.props);
         if (!this.props.bio) {
@@ -52,6 +63,7 @@ export class BioEditor extends React.Component {
     handleChange(inputElement) {
         this.setState({
             [inputElement.name]: inputElement.value
+            // bio: e.target.value
         });
     }
     toggleEditingMode() {
@@ -83,6 +95,9 @@ export class BioEditor extends React.Component {
         } else {
             return (
                 <div>
+                    <h1>
+                        {this.props.firstname} {this.props.lastname}
+                    </h1>
                     <h3>Biography</h3>
                     <p className="bio-box">{this.props.bio}</p>
                     <button onClick={this.toggleEditingMode}>

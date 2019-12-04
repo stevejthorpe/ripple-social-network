@@ -7,14 +7,12 @@ export default function ProfilePic({
     toggleUploader
 }) {
     imageUrl = imageUrl || "user.png";
+
     return (
         <div>
-            <h3>
-                Profile Pic :: {firstname} {lastname}
-            </h3>
             <img
                 src={imageUrl}
-                alt="profile pic"
+                alt={`${firstname} ${lastname}`}
                 onClick={toggleUploader}
                 className="profile-pic-medium"
             />

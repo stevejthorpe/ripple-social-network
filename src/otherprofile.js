@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "./axios";
+import { FriendButton } from "./friendbutton";
 
 export class OtherProfile extends React.Component {
     constructor(props) {
@@ -15,7 +16,7 @@ export class OtherProfile extends React.Component {
             .then(({ data }) => {
                 console.log("Data: ", data);
                 if (this.props.match.params.id == data.id) {
-                    this.props.history.push("/");
+                    return this.props.history.push("/");
                 } else {
                     this.setState({
                         firstname: data.user.firstname,
@@ -28,38 +29,12 @@ export class OtherProfile extends React.Component {
             .catch(err => {
                 console.log("Error in GET api/user: ", err);
             });
-
-        // try {
-        //     console.log("In componentDidMount");
-        //     let { data } = await axios.get(
-        //         `api/user/` + this.props.match.params.id
-        //     );
-        //     console.log("/geturserprofile data: ", data);
-        // } catch (err) {
-        //     console.log("Error: ", err);
-        // }
-
-        // let { id, image, firstname, lastname, email, bio } = data;
-
-        // Figure out of the users id is the same as the users id. If so, redirect to / route.
-        // make req to server for login in user id.(req.session)
-
-        // if (this.props.match.params.id == req.session.userId) {
-        //     this.props.history.push("/");
-        // }
     }
-    // getUserProfile() {
-    //     console.log("getUserProfile is running");
-    //     try {
-    //
-    //     } catch (err) {
-    //         console.log("Error | getUserProfile: ", err);
-    //     }
-    // }
     render() {
         return (
             <div className="user-profile">
                 <img src={this.state.imageUrl} />
+                <FriendButton otherId={this.props.match.params.id} />
                 <div>
                     <h1 className="user-profile-aside">
                         {this.state.firstname} {this.state.lastname}

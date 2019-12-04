@@ -43,6 +43,27 @@ exports.getUserData = function(userId) {
     );
 };
 
+exports.getNewUsers = function() {
+    return db.query(
+        `SELECT *
+        FROM users
+        ORDER BY id
+        LIMIT 3
+        `
+    );
+};
+
+exports.getUserSearch = function(search) {
+    console.log("in getUserSearch");
+    return db.query(
+        `SELECT *
+        FROM users
+        WHERE firstname ILIKE  $1
+        LIMIT 3`,
+        [search + "%"]
+    );
+};
+
 exports.addImageUrl = function(imageUrl, userId) {
     console.log("inside addImageUrl: ", imageUrl, userId);
     return db.query(

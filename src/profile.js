@@ -13,7 +13,12 @@ export function Profile(props) {
                 lastname={props.lastname}
                 imageUrl={props.imageUrl}
             />
-            <BioEditor bio={props.bio} setBio={props.setBio} />
+            <BioEditor
+                firstname={props.firstname}
+                lastname={props.lastname}
+                bio={props.bio}
+                setBio={props.setBio}
+            />
         </div>
     );
 }

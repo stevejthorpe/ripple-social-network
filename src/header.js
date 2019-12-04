@@ -1,5 +1,7 @@
 import React from "react";
 
+import ProfilePic from "./profile-pic";
+
 export default class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -14,9 +16,8 @@ export default class Header extends React.Component {
                     src="/logo.png"
                     alt="logo"
                 />
-
                 <p>
-                    {this.props.firstname} {this.props.lastname}
+                    <em>r i p p l e</em>
                 </p>
 
                 <img
@@ -29,3 +30,10 @@ export default class Header extends React.Component {
         );
     }
 }
+
+//
+// <ProfilePic
+//     src={this.props.imageUrl}
+//     onClick={this.props.toggleUploader}
+//     className="profile-pic-small"
+// />;

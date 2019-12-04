@@ -241,7 +241,7 @@ app.get("/user.json", (req, res) => {
         });
 });
 
-// USER PROFILE //
+// USER PROFILE | OTHER USERS //
 app.get("/api/user/:id", (req, res) => {
     console.log("GET/user/:id route");
     console.log("req.params.id: ", req.params.id);
@@ -253,6 +253,32 @@ app.get("/api/user/:id", (req, res) => {
         })
         .catch(err => {
             console.log("Error in POST / user: ", err);
+        });
+});
+
+// USER SEARCH //
+app.get("/users/:search", (req, res) => {
+    console.log("GET/findpeople");
+    console.log("GET/findpeople params: ", req.params.search);
+    return db
+        .getUserSearch(req.params.search)
+        .then(({ rows }) => {
+            console.log("GET/findpeople rows: ", rows);
+            res.json(rows);
+        })
+        .catch(err => {
+            console.log("Error GET/findpeople: ", err);
+        });
+});
+
+app.get("/users", (req, res) => {
+    return db
+        .getNewUsers()
+        .then(({ rows }) => {
+            res.json(rows);
+        })
+        .catch(err => {
+            console.log("Error in GET/users | getNewUsers: ", err);
         });
 });
 
@@ -320,8 +346,9 @@ app.get("*", function(req, res) {
 
 // LOGOUT //
 app.get("/logout", (req, res) => {
-    req.session = null;
-    res.redirect("/");
+    console.log("Logging out");
+    req.session.userId = null;
+    res.redirect("/welcome");
 });
 
 app.listen(8080, function() {
