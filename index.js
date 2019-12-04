@@ -138,14 +138,6 @@ app.post("/register", (req, res) => {
 });
 
 // LOGIN //
-app.get("/login", (req, res) => {
-    console.log("GET login route");
-    if (req.session.userId) {
-        res.redirect("/");
-    } else {
-        res.sendFile(__dirname + "/index.html");
-    }
-});
 
 app.post("/login", async (req, res) => {
     console.log("POST login route");
@@ -161,6 +153,11 @@ app.post("/login", async (req, res) => {
         if (correctPassword) {
             console.log("Passwords match");
             req.session.userId = hashedPassword.rows[0].id;
+            console.log(
+                "hashedPassword.rows[0].id: ",
+                hashedPassword.rows[0].id
+            );
+
             console.log("req.session.userId: ", req.session.userId);
             res.json({
                 success: true
@@ -175,6 +172,15 @@ app.post("/login", async (req, res) => {
         res.json({
             success: false
         });
+    }
+});
+
+app.get("/login", (req, res) => {
+    console.log("GET login route");
+    if (req.session.userId) {
+        res.redirect("/");
+    } else {
+        res.sendFile(__dirname + "/index.html");
     }
 });
 
@@ -282,20 +288,75 @@ app.get("/users", (req, res) => {
         });
 });
 
-// app.get("/user/:id", (req, res) => {
-//     console.log("GET/userprofile");
-//     console.log("GET/userprofile req.body: ", req.body);
-//     console.log("req.params.id: ", req.params.id);
-//     return db
-//         .getUserProfile()
-//         .then(data => {
-//             console.log("GET | getUserProfile data: ", data.rows[0]);
-//             res.json(data.rows[0]);
-//         })
-//         .catch(err => {
-//             console.log("Error | getUserProfile: ", err);
-//         });
-// });
+// FRIENDSHIP //
+app.post("/send-friend-request/:recieverId", (req, res) => {
+    return db
+        .addFriendRequest(req.params.recieverId, req.session.userId)
+        .then(resp => {
+            console.log("POST/friendshipstatus resp: ", resp);
+        })
+        .catch(err => {
+            console.log("Error in POST/friendshipstatus: ", err);
+        });
+});
+
+app.post("/accept-friend-request/:recieverId", (req, res) => {
+    return db
+        .addAcceptFriend(req.params.recieverId, req.session.userId)
+        .then(resp => {
+            console.log("POSTaccept-friend-request/ resp: ", resp);
+            res.json({
+                buttontext: "Unfriend"
+            });
+        })
+        .catch(err => {
+            console.log("Error in POST/accept-friend-request/: ", err);
+        });
+});
+
+app.post("/end-friendship/:recieverId", (req, res) => {
+    return db
+        .addEndFriend(req.params.recieverId, req.session.userId)
+        .then(resp => {
+            console.log("POST/end-friendship/ resp: ", resp);
+            res.json({
+                buttontext: "Make friend request"
+            });
+        })
+        .catch(err => {
+            console.log("Error in POST/end-friendship/: ", err);
+        });
+});
+
+app.get("/friendshipstatus/:recieverId", (req, res) => {
+    return db
+        .getFriendship(req.params.recieverId, req.session.userId)
+        .then(({ rows }) => {
+            console.log("rows: ", rows[0].accepted);
+            console.log("resp object: ", rows[0]);
+
+            // res.json(rows);
+            if (rows[0].accepted == true) {
+                res.json({
+                    buttontext: "Unfriend"
+                });
+            }
+            if (rows[0].accepted == false) {
+                if (rows[0].sender_id === req.session.userId) {
+                    res.json({
+                        buttontext: "Cancel friend request"
+                    });
+                } else {
+                    res.json({
+                        buttontext: "Accept friend request"
+                    });
+                }
+            }
+        })
+        .catch(err => {
+            console.log("Error in GET/friendshipstatus: ", err);
+        });
+});
 
 // IMAGE UPLOAD //
 app.post("/upload", uploader.single("file"), s3.upload, async (req, res) => {
