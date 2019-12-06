@@ -1,0 +1,57 @@
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { receiveFriendsWannabes, addFriend, unFriend } from "./actions";
+
+export default function Friends() {
+    const dispatch = useDispatch();
+    const wannabes = useSelector(state => {
+        console.log("in function passed to useSelector", state);
+        return (
+            state.friendsWannabes &&
+            state.friendsWannabes.filter(user => user.accepted == false)
+        );
+    });
+    const friends = useSelector(state => {
+        return (
+            state.friendsWannabes &&
+            state.friendsWannabes.filter(user => user.accepted == true)
+        );
+    });
+
+    console.log("wannabes: ", wannabes);
+    console.log("friends: ", friends);
+
+    useEffect(() => {
+        dispatch(receiveFriendsWannabes());
+    }, []);
+
+    return (
+        <div id="friend-box">
+            {friends &&
+                friends.map(user => (
+                    <div className="friend" key={user.id}>
+                        <img src={user.image} />
+                        <p>
+                            {user.firstname} {user.lastname}
+                        </p>
+                        <button onClick={() => dispatch(unFriend(user.id))}>
+                            Unfriend
+                        </button>
+                    </div>
+                ))}
+            {wannabes &&
+                wannabes.map(user => (
+                    <div className="wannabe" key={user.id}>
+                        <img src={user.image} />
+                        <p>
+                            {user.firstname} {user.lastname}
+                        </p>
+                        <button onClick={() => dispatch(addFriend(user.id))}>
+                            Accept
+                        </button>
+                    </div>
+                ))}
+        </div>
+    );
+}

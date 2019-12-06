@@ -303,6 +303,21 @@ app.post("/send-friend-request/:recieverId", (req, res) => {
         });
 });
 
+app.get("/friends-wannabes", (req, res) => {
+    console.log("In GET/friends-wannabes");
+    return db
+        .getWannabes(req.session.userId)
+        .then(resp => {
+            console.log("GET/friends-wannabes resp: ", resp.rows);
+            res.json({
+                friendsWannabes: resp
+            });
+        })
+        .catch(err => {
+            console.log("Error in GET/friends-wannabes: ", err);
+        });
+});
+
 app.post("/accept-friend-request/:recieverId", (req, res) => {
     return db
         .addAcceptFriend(req.params.recieverId, req.session.userId)

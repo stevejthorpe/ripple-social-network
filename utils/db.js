@@ -123,3 +123,16 @@ exports.getFriendship = function(recieverId, senderId) {
         [recieverId, senderId]
     );
 };
+
+exports.getWannabes = function(userId) {
+    console.log("In db.getWannabes: ");
+    return db.query(
+        `SELECT users.id, firstname, lastname, image, accepted
+        FROM friendships
+        JOIN users
+        ON (accepted = false AND receiver_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)`,
+        [userId]
+    );
+};

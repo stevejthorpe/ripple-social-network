@@ -7,6 +7,7 @@ import Uploader from "./uploader";
 import { Profile } from "./profile";
 import Header from "./header";
 import { OtherProfile } from "./otherprofile";
+import Friends from "./friends";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -108,6 +109,8 @@ export default class App extends React.Component {
                         />
                         <Route path="/users" render={() => <FindPeople />} />
                         <Route path="/user/:id" component={OtherProfile} />
+
+                        <Route path="/friends" render={() => <Friends />} />
                     </div>
                 </BrowserRouter>
 
@@ -118,6 +121,8 @@ export default class App extends React.Component {
         );
     }
 }
+
+// <Route path="/friends" component={Friends} />
 
 // <Profile
 //     id={this.state.id}
