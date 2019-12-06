@@ -28,9 +28,9 @@ export function FriendButton({ otherId }) {
             try {
                 axios
                     .post(`/send-friend-request/${otherId}`)
-                    .then(resp => {
-                        console.log("resp: ", resp);
-                        setButtonText(resp.data.buttontext);
+                    .then(({ data }) => {
+                        console.log("resp: ", data);
+                        setButtonText(data.buttontext);
                     })
                     .catch(err => {
                         console.log("Error in POST/send-friend-request: ", err);
@@ -43,9 +43,9 @@ export function FriendButton({ otherId }) {
             try {
                 axios
                     .post(`/accept-friend-request/${otherId}`)
-                    .then(resp => {
-                        console.log("resp: ", resp);
-                        setButtonText(resp.data.buttontext);
+                    .then(({ data }) => {
+                        console.log("resp: ", data);
+                        setButtonText(data.buttontext);
                     })
                     .catch(err => {
                         console.log(
@@ -61,9 +61,9 @@ export function FriendButton({ otherId }) {
             try {
                 axios
                     .post(`/end-friendship/${otherId}`)
-                    .then(resp => {
-                        console.log("resp: ", resp);
-                        setButtonText(resp.data.buttontext);
+                    .then(({ data }) => {
+                        console.log("resp: ", data);
+                        setButtonText(data.buttontext);
                     })
                     .catch(err => {
                         console.log("Error in POST/end-friendship: ", err);

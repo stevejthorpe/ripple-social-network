@@ -294,6 +294,9 @@ app.post("/send-friend-request/:recieverId", (req, res) => {
         .addFriendRequest(req.params.recieverId, req.session.userId)
         .then(resp => {
             console.log("POST/friendshipstatus resp: ", resp);
+            res.json({
+                buttontext: "Cancel friend request"
+            });
         })
         .catch(err => {
             console.log("Error in POST/friendshipstatus: ", err);

@@ -1,16 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Welcome from "./welcome";
-// import Logo from "./logo";
 import App from "./app";
+// Redux
+import { createStore, applyMiddleware } from "redux";
+import reduxPromise from "redux-promise";
+import { composeWithDevTools } from "redux-devtools-extension";
+import reducer from "./reducer";
+import { Provider } from "react-redux";
+
+const store = createStore(
+    reducer,
+    composeWithDevTools(applyMiddleware(reduxPromise))
+);
 
 let elem;
 
 if (location.pathname == "/welcome") {
     elem = <Welcome />;
 } else {
-    // elem = <Logo />;
-    elem = <App />;
+    elem = (
+        <Provider store={store}>
+            <App />
+        </Provider>
+    );
 }
 
 // puts the stuff on screen.
