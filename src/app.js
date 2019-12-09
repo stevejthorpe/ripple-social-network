@@ -36,25 +36,6 @@ export default class App extends React.Component {
                 console.log("APP | componentDidMount this.state: ", this.state)
         );
     }
-
-    // componentDidMount() {
-    //     axios
-    //         .get("/user", (req, res) => {
-    //             console.log("In GET/user");
-    //         })
-    //         .then(({ data }) => {
-    //             console.log("In componentDidMount data: ", data);
-    //             this.setState({
-    //                 firstname: data.firstname,
-    //                 lastname: data.lastname,
-    //                 email: data.email,
-    //                 bio: data.bio
-    //             });
-    //         })
-    //         .catch(err => {
-    //             console.log("Error in APP | getUserData: ", err);
-    //         });
-    // }
     toggleUploader() {
         console.log("toggleUploader running!");
         this.setState({
@@ -107,9 +88,8 @@ export default class App extends React.Component {
                                 </>
                             )}
                         />
-                        <Route path="/users" render={() => <FindPeople />} />
+                        <Route path="/newusers" component={FindPeople} />
                         <Route path="/user/:id" component={OtherProfile} />
-
                         <Route path="/friends" render={() => <Friends />} />
                     </div>
                 </BrowserRouter>
@@ -121,6 +101,7 @@ export default class App extends React.Component {
         );
     }
 }
+// <Route path="/newusers" render={() => <FindPeople />} />
 
 // <Route path="/friends" component={Friends} />
 

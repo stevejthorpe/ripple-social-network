@@ -10,6 +10,10 @@ export default function FindPeople() {
     const [newUsersArr, setNewUsersArr] = useState([]);
     const [searchUser, setSearchUser] = useState("");
 
+    if (!usersArr) {
+        return null;
+    }
+
     // useEffect(() => {
     //     (async () => {
     //         axios.get("/users/").then(({ data }) => {
@@ -30,9 +34,9 @@ export default function FindPeople() {
     }, [searchUser]);
 
     return (
-        <>
+        <div className="find-users">
             {newUsersArr.map(user => (
-                <div key={user.id}>
+                <div className="new-users" key={user.id}>
                     <h3>
                         {user.firstname} {user.lastname}
                     </h3>
@@ -40,14 +44,19 @@ export default function FindPeople() {
                         <em>Member Since:</em>
                         {new Date(user.created_at).toLocaleString()}
                     </p>
-                    <ProfilePic imageUrl={user.image} />
+                    <ProfilePic
+                        firstname={user.firstname}
+                        lastname={user.lastname}
+                        imageUrl={user.imageUrl}
+                    />
                 </div>
             ))}
+
             <h3>Find people</h3>
 
             <input onChange={e => setSearchUser(e.target.value)} />
             {usersArr.map(user => (
-                <div key={user.id}>
+                <div className="existing-users" key={user.id}>
                     <h3>
                         {user.firstname} {user.lastname}
                     </h3>
@@ -55,10 +64,14 @@ export default function FindPeople() {
                         <em>Member Since:</em>
                         {new Date(user.created_at).toLocaleString()}
                     </p>
-                    <ProfilePic imageUrl={user.image} />
+                    <ProfilePic
+                        firstname={user.firstname}
+                        lastname={user.lastname}
+                        imageUrl={user.imageUrl}
+                    />
                 </div>
             ))}
-        </>
+        </div>
     );
 }
 

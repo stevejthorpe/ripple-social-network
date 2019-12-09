@@ -6,10 +6,10 @@ export default function ProfilePic({
     imageUrl,
     toggleUploader
 }) {
-    imageUrl = imageUrl || "user.png";
+    imageUrl = imageUrl || "/default-profile-pic.png";
 
     return (
-        <div>
+        <div className="pic-box">
             <img
                 src={imageUrl}
                 alt={`${firstname} ${lastname}`}

@@ -44,12 +44,12 @@ exports.getUserData = function(userId) {
 };
 
 exports.getNewUsers = function() {
+    console.log("db.getNewUsers");
     return db.query(
         `SELECT *
         FROM users
-        ORDER BY id
-        LIMIT 3
-        `
+        ORDER BY id DESC
+        LIMIT 3`
     );
 };
 

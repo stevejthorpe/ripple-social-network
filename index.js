@@ -9,6 +9,9 @@ const { hash, compare } = require("./utils/bc");
 const { uploader } = require("./multer");
 const s3 = require("./s3");
 const { s3Url } = require("./config.json");
+// Socket.io
+const server = require("http").Server(app);
+const io = require("socket.io")(server, { origins: "localhost:8080" });
 
 ////////////////
 // Middleware //
@@ -184,55 +187,6 @@ app.get("/login", (req, res) => {
     }
 });
 
-// app.post("/login", (req, res) => {
-//     // let email = req.body.email;
-//
-//     // console.log(req.body.email);
-//     // console.log('Body: ', req.body);
-//
-//     if (req.body.password == 0 || req.body.email == 0) {
-//         res.redirect("/login");
-//     }
-//
-//     return db
-//         .getUser(req.body.email)
-//         .then(data => {
-//             let password = req.body.password;
-//
-//             let hashedPassword = data.rows[0].password;
-//             let userId = data.rows[0].id;
-//
-//             compare(password, hashedPassword)
-//                 .then(data => {
-//                     if (data === true) {
-//                         console.log("PW Match");
-//                         req.session.authenticated = true;
-//                         req.session.userId = userId;
-//                         res.json({
-//                             success: true
-//                         });
-//                     } else {
-//                         console.log("PW No Match");
-//                         res.json({
-//                             success: false
-//                         });
-//                     }
-//                 })
-//                 .catch(err => {
-//                     console.log("Error in compare pw: ", err);
-//                     res.json({
-//                         success: false
-//                     });
-//                 });
-//         })
-//         .catch(err => {
-//             console.log("Error in POST /login: ", err);
-//             res.json({
-//                 success: false
-//             });
-//         });
-// });
-
 // USER //
 app.get("/user.json", (req, res) => {
     console.log("POST/user route");
@@ -277,10 +231,12 @@ app.get("/users/:search", (req, res) => {
         });
 });
 
-app.get("/users", (req, res) => {
+app.get("/api/users", (req, res) => {
+    console.log("IN GET USERS");
     return db
         .getNewUsers()
         .then(({ rows }) => {
+            console.log("GET USERS ROWS: ", rows);
             res.json(rows);
         })
         .catch(err => {
@@ -413,6 +369,13 @@ app.post("/updatebio", (req, res) => {
         });
 });
 
+// LOGOUT //
+app.get("/logout", (req, res) => {
+    console.log("Logging out");
+    req.session = null;
+    res.redirect("/welcome#/login");
+});
+
 // DEFAULT //
 app.get("*", function(req, res) {
     console.log("GET * route");
@@ -423,13 +386,18 @@ app.get("*", function(req, res) {
     }
 });
 
-// LOGOUT //
-app.get("/logout", (req, res) => {
-    console.log("Logging out");
-    req.session.userId = null;
-    res.redirect("/welcome");
-});
+////////////
+// Server //
+////////////
 
 app.listen(8080, function() {
     console.log("I'm listening.");
+});
+
+io.on("connection", socket => {
+    console.log(`Socket with the id ${socket.id} just connected`);
+
+    socket.on("disconnect", () => {
+        console.log(`Socket with the id ${socket.id} just disconnected`);
+    });
 });

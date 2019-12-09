@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { receiveFriendsWannabes, addFriend, unFriend } from "./actions";
+import ProfilePic from "./profile-pic";
 
 export default function Friends() {
     const dispatch = useDispatch();
@@ -30,8 +31,14 @@ export default function Friends() {
         <div id="friend-box">
             {friends &&
                 friends.map(user => (
-                    <div className="friend" key={user.id}>
-                        <img src={user.image} />
+                    <div className="friends" key={user.id}>
+                        <Link to={`/user/${user.id}`}>
+                            <ProfilePic
+                                firstname={user.firstname}
+                                lastname={user.lastname}
+                                imageUrl={user.imageUrl}
+                            />
+                        </Link>
                         <p>
                             {user.firstname} {user.lastname}
                         </p>
@@ -42,8 +49,11 @@ export default function Friends() {
                 ))}
             {wannabes &&
                 wannabes.map(user => (
-                    <div className="wannabe" key={user.id}>
-                        <img src={user.image} />
+                    <div className="wannabes" key={user.id}>
+                        <img
+                            src={user.image}
+                            onClick={() => location.replace(`/user/${user.id}`)}
+                        />
                         <p>
                             {user.firstname} {user.lastname}
                         </p>
@@ -55,3 +65,8 @@ export default function Friends() {
         </div>
     );
 }
+
+// <img
+//     src={user.image}
+//     onClick={() => location.replace(`/user/${user.id}`)}
+// />

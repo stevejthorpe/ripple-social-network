@@ -8,6 +8,17 @@ import reduxPromise from "redux-promise";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from "./reducer";
 import { Provider } from "react-redux";
+// Socket.io
+// import * as io from "socket.io-client";
+//
+// const socket = io.connect();
+//
+// socket.on("welcome", function(data) {
+//     console.log(data);
+//     socket.emit("thanks", {
+//         message: "Thank you. It is great to be here."
+//     });
+// });
 
 const store = createStore(
     reducer,
