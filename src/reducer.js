@@ -35,6 +35,14 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    if (action.type == "CHAT_MESSAGES") {
+        console.log("Reducer CHAT_MESSAGES: ", action.msgs);
+        state = {
+            ...state,
+            msgs: action.msgs
+        };
+    }
+
     console.log(`state ended as `, state);
     return state;
 }

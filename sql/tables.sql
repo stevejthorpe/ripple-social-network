@@ -10,9 +10,20 @@
 --        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 -- );
 
-CREATE TABLE friendships(
+-- CREATE TABLE friendships(
+--     id SERIAL PRIMARY KEY,
+--     receiver_id INT NOT NULL REFERENCES users(id),
+--     sender_id INT NOT NULL REFERENCES users(id),
+--     accepted BOOLEAN DEFAULT FALSE
+-- );
+
+CREATE TABLE chat(
     id SERIAL PRIMARY KEY,
-    receiver_id INT NOT NULL REFERENCES users(id),
-    sender_id INT NOT NULL REFERENCES users(id),
-    accepted BOOLEAN DEFAULT FALSE
+    receiver_id INT
+    firstname VARCHAR(255) NOT NULL CHECK (firstname != ''),
+    lastname VARCHAR(255) NOT NULL CHECK (lastname != ''),
+    image VARCHAR(255),
+    sender_id INT NOT NULL,
+    msg TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

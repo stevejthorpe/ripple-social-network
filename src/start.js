@@ -9,6 +9,8 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import reducer from "./reducer";
 import { Provider } from "react-redux";
 // Socket.io
+import { init } from "./socket";
+
 // import * as io from "socket.io-client";
 //
 // const socket = io.connect();
@@ -30,6 +32,7 @@ let elem;
 if (location.pathname == "/welcome") {
     elem = <Welcome />;
 } else {
+    init(store);
     elem = (
         <Provider store={store}>
             <App />

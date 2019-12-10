@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const compression = require("compression"); // Compress text files gzip
-const cookieSession = require("cookie-session");
+// const cookieSession = require("cookie-session");
 const db = require("./utils/db");
 const helmet = require("helmet");
 const csurf = require("csurf");
@@ -29,21 +29,22 @@ app.use(
     })
 );
 
-app.use(
-    cookieSession({
-        secret: "I'm always angry.",
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
+// COOKIE SESSION //
+const cookieSession = require("cookie-session");
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90
+});
 
+app.use(cookieSessionMiddleware);
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+
+// SECURITY //
 app.use(helmet());
 
 app.use(csurf());
-
-app.use(function(req, res, next) {
-    res.cookie("mytoken", req.csrfToken());
-    next();
-});
 
 /////////////////
 // Environment //
@@ -185,6 +186,13 @@ app.get("/login", (req, res) => {
     } else {
         res.sendFile(__dirname + "/index.html");
     }
+});
+
+// LOGOUT //
+app.get("/logout", (req, res) => {
+    console.log("Logging out");
+    req.session.userId = null;
+    res.redirect("/welcome#/login");
 });
 
 // USER //
@@ -369,20 +377,21 @@ app.post("/updatebio", (req, res) => {
         });
 });
 
-// LOGOUT //
-app.get("/logout", (req, res) => {
-    console.log("Logging out");
-    req.session = null;
-    res.redirect("/welcome#/login");
-});
-
 // DEFAULT //
+// app.get("*", function(req, res) {
+//     console.log("GET * route");
+//     if (!req.session.userId) {
+//         res.redirect("/welcome");
+//     } else {
+//         res.sendFile(__dirname + "/index.html");
+//     }
+// });
+
 app.get("*", function(req, res) {
-    console.log("GET * route");
-    if (!req.session.userId) {
-        res.redirect("/welcome");
-    } else {
+    if (req.session.userId) {
         res.sendFile(__dirname + "/index.html");
+    } else {
+        res.redirect("/welcome");
     }
 });
 
@@ -390,14 +399,60 @@ app.get("*", function(req, res) {
 // Server //
 ////////////
 
-app.listen(8080, function() {
+// app.listen(8080, function() {
+//     console.log("I'm listening.");
+// });
+
+server.listen(8080, function() {
     console.log("I'm listening.");
 });
 
-io.on("connection", socket => {
-    console.log(`Socket with the id ${socket.id} just connected`);
+// io.on("connection", socket => {
+//     console.log(`Socket with the id ${socket.id} just connected`);
+//
+//     socket.on("disconnect", () => {
+//         console.log(`Socket with the id ${socket.id} just disconnected`);
+//     });
+// });
 
-    socket.on("disconnect", () => {
-        console.log(`Socket with the id ${socket.id} just disconnected`);
+///////////////////////////////
+// SERVER SIDE FOR SOCKET IO //
+///////////////////////////////
+
+io.on("connection", async socket => {
+    console.log(`Socket with the id ${socket.id} just connected`);
+    if (!socket.request.session.userId) {
+        // If not logged in, disconnect.
+        return socket.disconnect(true);
+    }
+    let userId = socket.request.session.userId;
+
+    // Chat message stuff
+    // Make db query for last 10 chat chatMessages
+
+    socket.on("chat message", msg => {
+        console.log("msg on the server: ", msg);
+        console.log("userId: ", userId);
+        console.log("socket.request.session: ", socket.request.session);
+        // io.sockets.emit("send message object", msg);
+
+        // Look up info about user (firstname, lastname, image)
+        // Then add it to db.
+        // Then emit to everyone...
+
+        Promise.all([db.getChats(), db.addChat(userId, msg)])
+            .then(data => {
+                console.log("Chat list: ", data[0].rows);
+                // io.sockets.emit("chatMessages", data.rows[0].reverse());
+                io.sockets.emit("chatMessages", data[0].rows.reverse());
+
+                // console.log("addChat: ", data[1].rows);
+                // io.sockets.emit("chatMessages", data[0].rows.reverse());
+                // console.log("data[0].rows.reverse(): ", data[0].rows.reverse());
+                // console.log("User data: ", data[1].rows);
+            })
+            .catch(err => {
+                console.log("error", err);
+            });
     });
 });

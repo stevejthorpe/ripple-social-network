@@ -27,3 +27,19 @@ export async function unFriend(id) {
         id
     };
 }
+
+export async function chatMessages(msgs) {
+    console.log("In actions chatMessages: ", msgs);
+    return {
+        type: "CHAT_MESSAGES",
+        msgs
+    };
+}
+
+export async function chatMessage(msg) {
+    console.log("In actions chatMessages");
+    // return {
+    //     type: "CHAT_MESSAGE",
+    //     msg
+    // };
+}

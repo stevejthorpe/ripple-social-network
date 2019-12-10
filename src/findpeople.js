@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ProfilePic from "./profile-pic";
+import { Link } from "react-router-dom";
 
 export default function FindPeople() {
     // - things in state:
@@ -64,11 +65,13 @@ export default function FindPeople() {
                         <em>Member Since:</em>
                         {new Date(user.created_at).toLocaleString()}
                     </p>
-                    <ProfilePic
-                        firstname={user.firstname}
-                        lastname={user.lastname}
-                        imageUrl={user.imageUrl}
-                    />
+                    <Link to={`/user/${user.id}`}>
+                        <ProfilePic
+                            firstname={user.firstname}
+                            lastname={user.lastname}
+                            imageUrl={user.imageUrl}
+                        />
+                    </Link>
                 </div>
             ))}
         </div>

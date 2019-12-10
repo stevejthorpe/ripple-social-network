@@ -136,3 +136,33 @@ exports.getWannabes = function(userId) {
         [userId]
     );
 };
+
+exports.getChats = function() {
+    console.log("In db.getChats");
+    return db.query(
+        `SELECT users.firstname, users.lastname, users.image, chat.msg, chat.created_at
+        FROM chat
+        JOIN users
+        ON chat.sender_id = users.id
+        ORDER BY chat.created_at DESC
+        LIMIT 10`
+    );
+};
+
+// exports.addChat = function(sender_id, firstname, lastname, image, msg) {
+//     console.log("in db.addChat");
+//     return db.query(
+//         `INSERT INTO chat (sender_id, firstname, lastname, image, msg)
+//         VALUES ($1, $2, $3, $4, $5)`,
+//         [sender_id, firstname, lastname, image, msg]
+//     );
+// };
+
+exports.addChat = function(sender_id, msg) {
+    console.log("in db.addChat");
+    return db.query(
+        `INSERT INTO chat (sender_id, msg)
+        VALUES ($1, $2)`,
+        [sender_id, msg]
+    );
+};

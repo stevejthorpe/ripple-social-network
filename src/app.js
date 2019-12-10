@@ -8,6 +8,7 @@ import { Profile } from "./profile";
 import Header from "./header";
 import { OtherProfile } from "./otherprofile";
 import Friends from "./friends";
+import Chat from "./chat";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -90,7 +91,12 @@ export default class App extends React.Component {
                         />
                         <Route path="/newusers" component={FindPeople} />
                         <Route path="/user/:id" component={OtherProfile} />
-                        <Route path="/friends" render={() => <Friends />} />
+                        <Route
+                            exact
+                            path="/friends"
+                            render={() => <Friends />}
+                        />
+                        <Route exact path="/chat" component={Chat} />
                     </div>
                 </BrowserRouter>
 

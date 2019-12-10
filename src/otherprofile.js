@@ -37,18 +37,19 @@ export class OtherProfile extends React.Component {
                 <ProfilePic
                     firstname={this.state.firstname}
                     lastname={this.state.lastname}
-                    imgageUrl={this.state.imgageUrl}
+                    imageUrl={this.state.imageUrl}
                 />
-                <FriendButton
-                    className="btn profile-btn"
-                    otherId={this.props.match.params.id}
-                />
+
                 <div>
                     <h1 className="user-profile-aside">
                         {this.state.firstname} {this.state.lastname}
                     </h1>
                     <p>{this.state.bio}</p>
                 </div>
+                <FriendButton
+                    className="btn profile-btn"
+                    otherId={this.props.match.params.id}
+                />
             </div>
         );
     }

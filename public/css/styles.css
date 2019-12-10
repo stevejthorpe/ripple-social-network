@@ -142,6 +142,9 @@ p {
     background: #d6e6f2;
 }
 
+/* ///// */
+/* USERS */
+/* ///// */
 .find-users {
     display: flex;
     flex-direction: column;
@@ -159,6 +162,30 @@ p {
 .existing-users {
     justify-content: space-around;
     flex-direction: column;
+}
+
+/* ///// */
+/* CHAT  */
+/* ///// */
+
+.chat {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    margin: 30px;
+    width: 400px;
+    border: 1px red solid;
+    transform: translateY(50%);
+    transform: translateX(50%);
+}
+
+.chat-container {
+    height: 300px;
+    width: 300px;
+    overflow-y: scroll;
+    border: 1px blue solid;
 }
 
 .uploader {
