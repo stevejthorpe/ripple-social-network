@@ -43,13 +43,15 @@ exports.getUserData = function(userId) {
     );
 };
 
-exports.getNewUsers = function() {
+exports.getNewUsers = function(userId) {
     console.log("db.getNewUsers");
     return db.query(
-        `SELECT *
+        `SELECT id, firstname, lastname, bio, image, created_at
         FROM users
-        ORDER BY id DESC
-        LIMIT 3`
+        WHERE id != $1
+        ORDER BY created_at DESC
+        LIMIT 3`,
+        [userId]
     );
 };
 
@@ -140,7 +142,7 @@ exports.getWannabes = function(userId) {
 exports.getChats = function() {
     console.log("In db.getChats");
     return db.query(
-        `SELECT users.firstname, users.lastname, users.image, chat.msg, chat.created_at
+        `SELECT users.id, users.firstname, users.lastname, users.image, chat.msg, chat.created_at
         FROM chat
         JOIN users
         ON chat.sender_id = users.id

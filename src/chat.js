@@ -36,7 +36,7 @@ export default function Chat() {
                 {msgs &&
                     msgs.map(item => (
                         <div className="message" key={item.id}>
-                            <Link to={`/user/${item.userId}`}>
+                            <Link to={`/user/${item.id}`}>
                                 <ProfilePic
                                     firstname={item.firstname}
                                     lastname={item.lastname}

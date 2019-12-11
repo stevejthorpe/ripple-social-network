@@ -26,6 +26,17 @@ export default function FindPeople() {
 
     useEffect(() => {
         (async () => {
+            axios.get("/api/newusers").then(({ data }) => {
+                console.log("dataaaaa..", data);
+                setNewUsersArr(data);
+                console.log("newUsersArr: ", newUsersArr);
+                // setNewUsersArr([...data]);
+            });
+        })();
+    }, []);
+
+    useEffect(() => {
+        (async () => {
             if (searchUser != "") {
                 axios.get(`/users/${searchUser}`).then(({ data }) => {
                     setUsersArr([...data]);

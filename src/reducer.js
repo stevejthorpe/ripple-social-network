@@ -35,11 +35,19 @@ export default function reducer(state = {}, action) {
         };
     }
 
-    if (action.type == "CHAT_MESSAGES") {
+    if (action.type == "LAST_CHAT_MESSAGES") {
         console.log("Reducer CHAT_MESSAGES: ", action.msgs);
         state = {
             ...state,
             msgs: action.msgs
+        };
+    }
+
+    if (action.type == "NEW_MESSAGE") {
+        console.log("Reducer NEW_MESSAGE: ", action.msg);
+        state = {
+            ...state,
+            msgs: [...state.msgs, action.msg]
         };
     }
 

@@ -188,6 +188,10 @@ p {
     border: 1px blue solid;
 }
 
+.message {
+    border-bottom: 1px black dotted;
+}
+
 .uploader {
     position: relative;
     display: flex;

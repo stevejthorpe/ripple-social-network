@@ -31,15 +31,15 @@ export async function unFriend(id) {
 export async function chatMessages(msgs) {
     console.log("In actions chatMessages: ", msgs);
     return {
-        type: "CHAT_MESSAGES",
+        type: "LAST_CHAT_MESSAGES",
         msgs
     };
 }
 
 export async function chatMessage(msg) {
     console.log("In actions chatMessages");
-    // return {
-    //     type: "CHAT_MESSAGE",
-    //     msg
-    // };
+    return {
+        type: "NEW_MESSAGE",
+        msg
+    };
 }

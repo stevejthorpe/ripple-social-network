@@ -239,10 +239,10 @@ app.get("/users/:search", (req, res) => {
         });
 });
 
-app.get("/api/users", (req, res) => {
+app.get("/api/newusers", (req, res) => {
     console.log("IN GET USERS");
     return db
-        .getNewUsers()
+        .getNewUsers(req.session.userId)
         .then(({ rows }) => {
             console.log("GET USERS ROWS: ", rows);
             res.json(rows);
