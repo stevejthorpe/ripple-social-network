@@ -29,6 +29,24 @@ export default function Friends() {
 
     return (
         <div id="friend-box">
+            {wannabes &&
+                wannabes.map(user => (
+                    <div className="wannabes" key={user.id}>
+                        <Link to={`/user/${user.id}`}>
+                            <ProfilePic
+                                firstname={user.firstname}
+                                lastname={user.lastname}
+                                imageUrl={user.image}
+                            />
+                        </Link>
+                        <p>
+                            {user.firstname} {user.lastname}
+                        </p>
+                        <button onClick={() => dispatch(addFriend(user.id))}>
+                            Accept
+                        </button>
+                    </div>
+                ))}
             {friends &&
                 friends.map(user => (
                     <div className="friends" key={user.id}>
@@ -36,7 +54,7 @@ export default function Friends() {
                             <ProfilePic
                                 firstname={user.firstname}
                                 lastname={user.lastname}
-                                imageUrl={user.imageUrl}
+                                imageUrl={user.image}
                             />
                         </Link>
                         <p>
@@ -44,21 +62,6 @@ export default function Friends() {
                         </p>
                         <button onClick={() => dispatch(unFriend(user.id))}>
                             Unfriend
-                        </button>
-                    </div>
-                ))}
-            {wannabes &&
-                wannabes.map(user => (
-                    <div className="wannabes" key={user.id}>
-                        <img
-                            src={user.image}
-                            onClick={() => location.replace(`/user/${user.id}`)}
-                        />
-                        <p>
-                            {user.firstname} {user.lastname}
-                        </p>
-                        <button onClick={() => dispatch(addFriend(user.id))}>
-                            Accept
                         </button>
                     </div>
                 ))}

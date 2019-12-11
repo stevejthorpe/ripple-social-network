@@ -35,14 +35,17 @@ export default class Uploader extends React.Component {
     }
     render() {
         return (
-            <div className="uploader">
-                <h3>This is the uploader</h3>
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={this.handleChange}
-                />
-                <button onClick={this.submitImg}>Upload</button>
+            <div className="uploader" onClick={this.toggleUploader}>
+                <div>
+                    <h4>Upload your picture</h4>
+                    <div className="uploader-input"></div>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={this.handleChange}
+                    />
+                    <button onClick={this.submitImg}>Upload</button>
+                </div>
             </div>
         );
     }

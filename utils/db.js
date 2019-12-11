@@ -21,6 +21,15 @@ exports.getUser = function(email) {
         [email]
     );
 };
+exports.getUserById = function(userId) {
+    console.log("Email inside getUser: ", userId);
+    return db.query(
+        `SELECT *
+         FROM users
+         WHERE id = $1`,
+        [userId]
+    );
+};
 
 exports.getUserProfile = function(profileId) {
     console.log("profileId in getUserProfile: ", profileId);
@@ -121,7 +130,8 @@ exports.getFriendship = function(recieverId, senderId) {
     return db.query(
         `SELECT * FROM friendships
         WHERE (receiver_id = $1 AND sender_id = $2)
-        OR (receiver_id = $2 AND sender_id = $1)`,
+        OR (receiver_id = $2 AND sender_id = $1)
+        ORDER BY friendships.id ASC`,
         [recieverId, senderId]
     );
 };
@@ -134,7 +144,8 @@ exports.getWannabes = function(userId) {
         JOIN users
         ON (accepted = false AND receiver_id = $1 AND sender_id = users.id)
         OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)
-        OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)`,
+        OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)
+        ORDER BY friendships.id ASC`,
         [userId]
     );
 };
@@ -164,7 +175,8 @@ exports.addChat = function(sender_id, msg) {
     console.log("in db.addChat");
     return db.query(
         `INSERT INTO chat (sender_id, msg)
-        VALUES ($1, $2)`,
+        VALUES ($1, $2)
+        RETURNING *`,
         [sender_id, msg]
     );
 };

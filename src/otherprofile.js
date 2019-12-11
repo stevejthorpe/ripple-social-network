@@ -45,11 +45,11 @@ export class OtherProfile extends React.Component {
                         {this.state.firstname} {this.state.lastname}
                     </h1>
                     <p>{this.state.bio}</p>
+                    <FriendButton
+                        className="btn profile-btn"
+                        otherId={this.props.match.params.id}
+                    />
                 </div>
-                <FriendButton
-                    className="btn profile-btn"
-                    otherId={this.props.match.params.id}
-                />
             </div>
         );
     }

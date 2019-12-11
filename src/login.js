@@ -7,13 +7,30 @@ export default class Login extends React.Component {
         super(props);
         this.state = {};
     }
-    submit() {
-        // e.preventDefault();
-
-        console.log(this.email);
-        console.log(this.first);
-        console.log(this.last);
-        console.log(this.password);
+    // async submit(e) {
+    //     e.preventDefault();
+    //     try {
+    //         const { data } = axios.post("/login", {
+    //             email: this.state.email,
+    //             password: this.state.password
+    //         });
+    //         console.log("This: ", this.state);
+    //
+    //         data ? location.replace("/") : this.setState({ error: true });
+    //     } catch (err) {
+    //         console.log("Login error: ", err);
+    //         this.setState({
+    //             error: true
+    //         });
+    //     }
+    // }
+    submit(e) {
+        e.preventDefault();
+        // console.log("This: ", this.state);
+        // console.log(this.state.email);
+        // console.log(this.email);
+        // console.log(this.state.password);
+        // console.log(this.password);
 
         axios
             .post("/login", {
@@ -34,7 +51,7 @@ export default class Login extends React.Component {
                 }
             })
             .catch(err => {
-                console.log("Error in POST /login: ", err);
+                console.log("Error in POST / login: ", err);
                 this.setState = {
                     error: true
                 };
@@ -80,8 +97,8 @@ export default class Login extends React.Component {
                         />
                     </label>
                     <button
-                        onClick={() => {
-                            this.submit();
+                        onClick={e => {
+                            this.submit(e);
                         }}
                     >
                         Login

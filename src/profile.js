@@ -13,6 +13,7 @@ export function Profile(props) {
                 firstname={props.firstname}
                 lastname={props.lastname}
                 imageUrl={props.imageUrl}
+                onClick={props.toggleUploader}
             />
             <BioEditor
                 firstname={props.firstname}

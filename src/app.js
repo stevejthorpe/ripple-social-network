@@ -61,7 +61,13 @@ export default class App extends React.Component {
             return null;
         }
         return (
-            <div>
+            <div className="outer">
+                {this.state.uploaderIsVisible && (
+                    <Uploader
+                        updateImg={this.updateImg}
+                        toggleUploader={this.toggleUploader}
+                    />
+                )}
                 <BrowserRouter>
                     <Header
                         id={this.state.id}
@@ -71,7 +77,7 @@ export default class App extends React.Component {
                         toggleUploader={this.toggleUploader}
                     />
 
-                    <div>
+                    <div className="app">
                         <Route
                             exact
                             path="/"
@@ -99,10 +105,6 @@ export default class App extends React.Component {
                         <Route exact path="/chat" component={Chat} />
                     </div>
                 </BrowserRouter>
-
-                {this.state.uploaderIsVisible && (
-                    <Uploader updateImg={this.updateImg} />
-                )}
             </div>
         );
     }

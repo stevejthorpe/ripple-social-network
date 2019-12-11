@@ -12,14 +12,9 @@ export default function Chat() {
     console.log("Chat messages: ", msgs);
 
     useEffect(() => {
-        console.log("Chat mounted");
-        console.log("elemRef: ", elemRef.current);
-        console.log(" scroll top: ", elemRef.current.scrollTop);
-        console.log("Client height: ", elemRef.current.clientHeight);
-        console.log("Scroll height: ", elemRef.current.scrollHeight);
         elemRef.current.scrollTop =
             elemRef.current.scrollHeight - elemRef.current.clientHeight;
-    }, []);
+    }, [msgs]);
 
     const keyCheck = e => {
         if (e.key === "Enter") {
@@ -31,31 +26,46 @@ export default function Chat() {
     };
     return (
         <div className="chat">
-            <h1>Chat Room!</h1>
+            <h1>Chat Room...</h1>
             <div className="chat-container" ref={elemRef}>
                 {msgs &&
                     msgs.map(item => (
-                        <div className="message" key={item.id}>
-                            <Link to={`/user/${item.id}`}>
-                                <ProfilePic
-                                    firstname={item.firstname}
-                                    lastname={item.lastname}
-                                    imageUrl={item.image}
-                                />
-                            </Link>
-                            <p>
-                                {item.firstname} {item.lastname}
-                            </p>
-                            <p>{item.created_at}</p>
-                            <p>{item.msg}</p>
+                        <div className="message-box" key={item.id}>
+                            <div className="chat-pic-box">
+                                <Link to={`/user/${item.id}`}>
+                                    <img
+                                        className="profile-pic-tiny"
+                                        src={item.image}
+                                    />
+                                </Link>
+                            </div>
+
+                            <div className="message">
+                                <p>
+                                    {item.firstname} {item.lastname}
+                                </p>
+                                <p className="message-date">
+                                    {item.created_at}
+                                </p>
+                                <p>{item.msg}</p>
+                            </div>
                         </div>
                     ))}
             </div>
 
             <textarea
+                className="chat-text"
                 placeholder="Add your message here..."
                 onKeyUp={keyCheck}
             ></textarea>
         </div>
     );
 }
+
+// <ProfilePic
+//     firstname={item.firstname}
+//     lastname={item.lastname}
+//     imageUrl={item.image}
+// />
+
+// alt=`{item.firstname} {item.lastname}`

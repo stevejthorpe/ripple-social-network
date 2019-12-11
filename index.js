@@ -9,6 +9,7 @@ const { hash, compare } = require("./utils/bc");
 const { uploader } = require("./multer");
 const s3 = require("./s3");
 const { s3Url } = require("./config.json");
+const moment = require("moment");
 // Socket.io
 const server = require("http").Server(app);
 const io = require("socket.io")(server, { origins: "localhost:8080" });
@@ -45,6 +46,11 @@ io.use(function(socket, next) {
 app.use(helmet());
 
 app.use(csurf());
+
+app.use(function(req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 /////////////////
 // Environment //
@@ -145,11 +151,12 @@ app.post("/register", (req, res) => {
 
 app.post("/login", async (req, res) => {
     console.log("POST login route");
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+    console.log("Login req.body: ", req.body);
 
     try {
-        const hashedPassword = await db.getUser(email);
-        const correctPassword = await compare(
+        let hashedPassword = await db.getUser(email);
+        let correctPassword = await compare(
             password,
             hashedPassword.rows[0].password
         );
@@ -179,20 +186,19 @@ app.post("/login", async (req, res) => {
     }
 });
 
-app.get("/login", (req, res) => {
-    console.log("GET login route");
-    if (req.session.userId) {
-        res.redirect("/");
-    } else {
-        res.sendFile(__dirname + "/index.html");
-    }
-});
+// app.get("/login", (req, res) => {
+//     console.log("GET login route");
+//     if (req.session.userId) {
+//         res.redirect("/");
+//     } else {
+//         res.sendFile(__dirname + "/index.html");
+//     }
+// });
 
 // LOGOUT //
-app.get("/logout", (req, res) => {
-    console.log("Logging out");
-    req.session.userId = null;
-    res.redirect("/welcome#/login");
+app.get("/logout", function(req, res) {
+    req.session = null;
+    res.redirect("/welcome");
 });
 
 // USER //
@@ -430,7 +436,19 @@ io.on("connection", async socket => {
     // Chat message stuff
     // Make db query for last 10 chat chatMessages
 
-    socket.on("chat message", msg => {
+    try {
+        let { rows } = await db.getChats();
+        console.log("Recent chats rows: ", rows);
+        rows.map(msgObj => ({
+            ...msgObj,
+            created_at: moment(msgObj.created_at).format("MMM-DD HH:mm")
+        }));
+        io.emit("chatMessages", rows.reverse());
+    } catch (err) {
+        console.log("Error in getChats: ", err);
+    }
+
+    socket.on("chat message", async msg => {
         console.log("msg on the server: ", msg);
         console.log("userId: ", userId);
         console.log("socket.request.session: ", socket.request.session);
@@ -440,19 +458,37 @@ io.on("connection", async socket => {
         // Then add it to db.
         // Then emit to everyone...
 
-        Promise.all([db.getChats(), db.addChat(userId, msg)])
-            .then(data => {
-                console.log("Chat list: ", data[0].rows);
-                // io.sockets.emit("chatMessages", data.rows[0].reverse());
-                io.sockets.emit("chatMessages", data[0].rows.reverse());
+        try {
+            let sender = await db.getUserById(userId);
+            let { rows } = await db.addChat(userId, msg);
+            console.log("Msg rows: ", rows[0]);
+            console.log("sender rows: ", sender.rows[0]);
+            let chatMessage = {
+                ...rows[0],
+                firstname: sender.rows[0].firstname,
+                lastname: sender.rows[0].lastname,
+                image: sender.rows[0].image,
+                id: sender.rows[0].id,
+                created_at: moment(rows[0].created_at).format("MMM-DD HH:mm")
+            };
+            io.emit("chatMessage", chatMessage);
+        } catch (err) {
+            console.log("Error in addChat: ", err);
+        }
 
-                // console.log("addChat: ", data[1].rows);
-                // io.sockets.emit("chatMessages", data[0].rows.reverse());
-                // console.log("data[0].rows.reverse(): ", data[0].rows.reverse());
-                // console.log("User data: ", data[1].rows);
-            })
-            .catch(err => {
-                console.log("error", err);
-            });
+        // Promise.all([db.getChats(), db.addChat(userId, msg)])
+        //     .then(data => {
+        //         console.log("Chat list: ", data[0].rows);
+        //         // io.sockets.emit("chatMessages", data.rows[0].reverse());
+        //         io.sockets.emit("chatMessages", data[0].rows.reverse());
+        //
+        //         // console.log("addChat: ", data[1].rows);
+        //         // io.sockets.emit("chatMessages", data[0].rows.reverse());
+        //         // console.log("data[0].rows.reverse(): ", data[0].rows.reverse());
+        //         // console.log("User data: ", data[1].rows);
+        //     })
+        //     .catch(err => {
+        //         console.log("error", err);
+        //     });
     });
 });
