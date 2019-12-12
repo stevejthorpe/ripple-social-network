@@ -14,6 +14,8 @@ const moment = require("moment");
 const server = require("http").Server(app);
 const io = require("socket.io")(server, { origins: "localhost:8080" });
 
+let onlineUsers = [];
+
 ////////////////
 // Middleware //
 ////////////////
@@ -433,25 +435,56 @@ io.on("connection", async socket => {
     }
     let userId = socket.request.session.userId;
 
+    // Online Users
+    onlineUsers.push({
+        userId: socket.request.session.userId,
+        socketId: socket.id
+    });
+    console.log("onlineUsers: ", onlineUsers);
+
+    console.log("Test onlineUsers map: ", onlineUsers.map(id => id.userId));
+
     // Chat message stuff
     // Make db query for last 10 chat chatMessages
 
     try {
         let { rows } = await db.getChats();
-        console.log("Recent chats rows: ", rows);
+        // console.log("Recent chats rows: ", rows);
         rows.map(msgObj => ({
             ...msgObj,
             created_at: moment(msgObj.created_at).format("MMM-DD HH:mm")
         }));
         io.emit("chatMessages", rows.reverse());
+
+        let currentUsers = await db.getUserByIdArr(
+            onlineUsers.map(id => id.userId)
+        );
+        console.log("currentUsers rows: ", currentUsers.rows);
+
+        let onlineArr = {
+            ...currentUsers,
+            firstname: currentUsers.rows.firstname,
+            lastname: currentUsers.rows.lastname,
+            image: currentUsers.rows.image,
+            id: currentUsers.rows.id
+        };
+        console.log("onlineArr: ", onlineArr.rows);
+        io.emit("onlineUsers", onlineArr.rows);
     } catch (err) {
         console.log("Error in getChats: ", err);
     }
 
+    socket.on("disconnect", () => {
+        onlineUsers.pop({
+            userId: socket.request.session.userId,
+            socketId: socket.id
+        });
+    });
+
     socket.on("chat message", async msg => {
-        console.log("msg on the server: ", msg);
-        console.log("userId: ", userId);
-        console.log("socket.request.session: ", socket.request.session);
+        // console.log("msg on the server: ", msg);
+        // console.log("userId: ", userId);
+        // console.log("socket.request.session: ", socket.request.session);
         // io.sockets.emit("send message object", msg);
 
         // Look up info about user (firstname, lastname, image)

@@ -43,3 +43,11 @@ export async function chatMessage(msg) {
         msg
     };
 }
+
+export async function onlineUsers(onlineUsersArr) {
+    console.log("In actions onlineUsers: ", onlineUsersArr);
+    return {
+        type: "ONLINE_USERS",
+        onlineUsersArr
+    };
+}

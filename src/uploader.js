@@ -8,6 +8,8 @@ export default class Uploader extends React.Component {
         this.state = {};
         this.handleChange = this.handleChange.bind(this);
         this.submitImg = this.submitImg.bind(this);
+        // this.toggleUploader = this.toggleUploader.bind(this);
+        console.log("uploader props: ", props);
     }
     handleChange(e) {
         console.log(
@@ -35,8 +37,12 @@ export default class Uploader extends React.Component {
     }
     render() {
         return (
-            <div className="uploader" onClick={this.toggleUploader}>
-                <div>
+            <div className="uploader">
+                <div className="uploader-box">
+                    <h4 className="close" onClick={this.props.toggleUploader}>
+                        X
+                    </h4>
+
                     <h4>Upload your picture</h4>
                     <div className="uploader-input"></div>
                     <input

@@ -3,7 +3,7 @@
 import React from "react";
 import ProfilePic from "./profile-pic";
 import { BioEditor } from "./bio-editor";
-import { FriendButton } from "./friendbutton";
+// import { FriendButton } from "./friendbutton";
 
 export function Profile(props) {
     console.log("props in profile: ", props);

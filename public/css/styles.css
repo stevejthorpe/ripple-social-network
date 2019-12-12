@@ -75,12 +75,14 @@ div {
     height: 50px;
     width: 50px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .profile-pic-small {
     height: 100px;
     width: 100px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .profile-pic-medium {
@@ -128,16 +130,17 @@ div {
     pointer-events: auto;
 } */
 
-.uploader > div {
+.uploader > .uploader-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 400px;
     height: 200px;
     position: relative;
-    margin: 10% auto;
-    padding: 5px 20px 13px 20px;
-    border-radius: 1%;
+    margin: 25% auto;
+    /* padding: 5px 20px 13px 20px; */
+    padding: 0;
+    border-radius: 2%;
     background: #fff;
     background: -moz-linear-gradient(#fff, #999);
     background: -webkit-linear-gradient(#fff, #999);
@@ -146,6 +149,32 @@ div {
     z-index: 110;
 
     pointer-events: auto;
+}
+
+.uploader > .uploader-box > .close {
+    display: flex;
+    justify-content: flex-end;
+    font-family: "Source Serif Pro", serif;
+    cursor: pointer;
+}
+
+.uploader-box > input {
+    padding: 10px;
+    margin: auto;
+    font-family: "Source Serif Pro", serif;
+}
+
+.uploader-box > h4 {
+    padding: 10px;
+    /* margin: auto; */
+    font-family: "Source Serif Pro", serif;
+}
+
+.uploader-box > button {
+    /* padding: 10px; */
+    /* margin: auto; */
+    font-family: "Source Serif Pro", serif;
+    height: 20px;
 }
 
 .user-profile {
@@ -162,6 +191,10 @@ div {
     border-radius: 1%;
     /* box-shadow: 6px 5px 24px #666666; */
     font-family: "Source Serif Pro", serif;
+}
+
+button {
+    cursor: pointer;
 }
 
 .user-profile-aside,
@@ -342,6 +375,40 @@ p {
 
 p.error {
     color: red;
+}
+
+/* //////////// */
+/* ONLINE USERS */
+/* //////////// */
+.online-users-box {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-self: auto;
+    align-content: center;
+    margin: 30px;
+    width: 400px;
+    padding: 5px;
+    /* background: #d6e6f2; */
+    /* transform: translateY(50%);
+    transform: translateX(50%); */
+
+    border-radius: 1%;
+
+    -webkit-box-shadow: inset 0px 23px 37px -10px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: inset 0px 23px 37px -10px rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0px 23px 37px -10px rgba(0, 0, 0, 0.15);
+}
+
+.online-users-item {
+    display: flex;
+    /* height: 200px; */
+    width: 300px;
+    padding: 2%;
+    margin: 2%;
+    overflow-y: scroll;
+    border-bottom: 1px grey dotted;
+    /* border: 1px black dotted; */
 }
 
 /* //////////// */

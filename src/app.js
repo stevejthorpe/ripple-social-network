@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "./axios";
 import { BrowserRouter, Route } from "react-router-dom";
-import ProfilePic from "./profile-pic";
+// import ProfilePic from "./profile-pic";
 import FindPeople from "./findpeople";
 import Uploader from "./uploader";
 import { Profile } from "./profile";
@@ -9,6 +9,7 @@ import Header from "./header";
 import { OtherProfile } from "./otherprofile";
 import Friends from "./friends";
 import Chat from "./chat";
+import OnlineUsers from "./online-users";
 
 export default class App extends React.Component {
     constructor(props) {
@@ -103,6 +104,11 @@ export default class App extends React.Component {
                             render={() => <Friends />}
                         />
                         <Route exact path="/chat" component={Chat} />
+                        <Route
+                            exact
+                            path="/onlineusers"
+                            component={OnlineUsers}
+                        />
                     </div>
                 </BrowserRouter>
             </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import ProfilePic from "./profile-pic";
+// import ProfilePic from "./profile-pic";
 
 import { socket } from "./socket";
 import { useSelector } from "react-redux";

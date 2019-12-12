@@ -31,6 +31,16 @@ exports.getUserById = function(userId) {
     );
 };
 
+exports.getUserByIdArr = function(userIdArr) {
+    console.log("userIdArr in getUserByIdArr", userIdArr);
+    return db.query(
+        `SELECT *
+        FROM users
+        WHERE id = ANY($1)`,
+        [userIdArr]
+    );
+};
+
 exports.getUserProfile = function(profileId) {
     console.log("profileId in getUserProfile: ", profileId);
 

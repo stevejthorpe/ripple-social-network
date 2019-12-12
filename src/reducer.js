@@ -51,6 +51,14 @@ export default function reducer(state = {}, action) {
         };
     }
 
+    if (action.type == "ONLINE_USERS") {
+        console.log("Reducer ONLINE_USERS: ", action.onlineUsersArr);
+        state = {
+            ...state,
+            onlineUsersArr: action.onlineUsersArr
+        };
+    }
+
     console.log(`state ended as `, state);
     return state;
 }
