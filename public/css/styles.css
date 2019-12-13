@@ -49,6 +49,18 @@ font-family: 'Lato', sans-serif; */
     font-family: "Source Serif Pro", serif;
 }
 
+.nav-link {
+    color: darkgrey;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding-left: 8px;
+}
+
+.nav-link:hover {
+    cursor: pointer;
+    transform: scale(10);
+}
+
 .app {
     display: flex;
     justify-content: center;
@@ -211,7 +223,7 @@ p {
     min-height: 150px;
     min-width: 300px;
 
-    border: 1px black dotted;
+    border: 1px grey dotted;
 }
 
 #friend-box {

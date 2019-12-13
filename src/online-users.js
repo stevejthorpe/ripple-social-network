@@ -11,7 +11,13 @@ export default function OnlineUsers() {
     const onlineUsers = useSelector(state => state && state.onlineUsersArr);
     console.log("OnlineUsersArr in component: ", onlineUsers);
 
-    // const total = onlineUsers.length;
+    // if (!onlineUsers) {
+    //     return null
+    // } else {
+    //     const total = onlineUsers.length;
+    // }
+
+
 
     useEffect(() => {
         elemRef.current.scrollTop =

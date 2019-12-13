@@ -21,23 +21,27 @@ export default function NavBar() {
     return (
         <ul className="nav-bar">
             <div>
-                <Link to="/friends">Friends</Link>
+                <Link className="nav-link" to="/friends">Friends</Link>
             </div>
+            |
             <div>
-                <Link to="/chat">Chat</Link>
+                <Link className="nav-link" to="/chat">Chat</Link>
             </div>
-
+            |
             <div>
-                <Link to="/newusers">Find Users</Link>
+                <Link  className="nav-link" to="/newusers">Find Users</Link>
             </div>
+            |
             <div>
-                <Link to="/logout">Logout</Link>
+                <Link  className="nav-link" to="/">Profile</Link>
             </div>
+            |
             <div>
-                <Link to="/">Profile</Link>
+                <Link  className="nav-link" to="/onlineusers">{total} Online users</Link>
             </div>
+            |
             <div>
-                <Link to="/onlineusers">| {total} Online users</Link>
+                <Link  className="nav-link" to="/logout">Logout</Link>
             </div>
         </ul>
     );
