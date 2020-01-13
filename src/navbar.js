@@ -16,33 +16,40 @@ export default function NavBar() {
         total = onlineUsers.length;
     }
 
-
-
     return (
-        <ul className="nav-bar">
-            <div>
-                <Link className="nav-link" to="/friends">Friends</Link>
-            </div>
-            |
-            <div>
-                <Link className="nav-link" to="/chat">Chat</Link>
-            </div>
-            |
-            <div>
-                <Link  className="nav-link" to="/newusers">Find Users</Link>
-            </div>
-            |
-            <div>
-                <Link  className="nav-link" to="/">Profile</Link>
-            </div>
-            |
-            <div>
-                <Link  className="nav-link" to="/onlineusers">{total} Online users</Link>
-            </div>
-            |
-            <div>
-                <Link  className="nav-link" to="/logout">Logout</Link>
-            </div>
-        </ul>
+        <nav className="nav navbar navbar-expand-sm navbar-light bg-light justify-content-center">
+            <ul className="navbar-nav">
+                <li className="nav-item">
+                    <Link className="nav-link" to="/friends">
+                        Friends
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/chat">
+                        Chat
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/newusers">
+                        Find Users
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/">
+                        Profile
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/onlineusers">
+                        {total} Online Users
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/logout">
+                        Logout
+                    </Link>
+                </li>
+            </ul>
+        </nav>
     );
 }

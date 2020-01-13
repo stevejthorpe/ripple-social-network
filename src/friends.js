@@ -28,43 +28,71 @@ export default function Friends() {
     }, []);
 
     return (
-        <div id="friend-box">
-            {wannabes &&
-                wannabes.map(user => (
-                    <div className="wannabes" key={user.id}>
-                        <Link to={`/user/${user.id}`}>
-                            <ProfilePic
-                                firstname={user.firstname}
-                                lastname={user.lastname}
-                                imageUrl={user.image}
-                            />
-                        </Link>
-                        <p>
-                            {user.firstname} {user.lastname}
-                        </p>
-                        <button onClick={() => dispatch(addFriend(user.id))}>
-                            Accept
-                        </button>
-                    </div>
-                ))}
-            {friends &&
-                friends.map(user => (
-                    <div className="friends" key={user.id}>
-                        <Link to={`/user/${user.id}`}>
-                            <ProfilePic
-                                firstname={user.firstname}
-                                lastname={user.lastname}
-                                imageUrl={user.image}
-                            />
-                        </Link>
-                        <p>
-                            {user.firstname} {user.lastname}
-                        </p>
-                        <button onClick={() => dispatch(unFriend(user.id))}>
-                            Unfriend
-                        </button>
-                    </div>
-                ))}
+        <div className="container">
+            <div className="row">
+                {wannabes &&
+                    wannabes.map(user => (
+                        <div className="wannabes card w-25" key={user.id}>
+                            <div className="card-header">
+                                <Link to={`/user/${user.id}`}>
+                                    <ProfilePic
+                                        className="card-img-top"
+                                        firstname={user.firstname}
+                                        lastname={user.lastname}
+                                        imageUrl={user.image}
+                                    />
+                                </Link>
+                            </div>
+                            <div className="card-body">
+                                <h5 className="card-title">
+                                    {user.firstname} {user.lastname}
+                                </h5>
+                                <p className="card-text">{user.bio} </p>
+                            </div>
+                            <div className="card-body">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => dispatch(addFriend(user.id))}
+                                >
+                                    Accept
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+            </div>
+
+            <div className="row">
+                {friends &&
+                    friends.map(user => (
+                        <div className="friends card w-25" key={user.id}>
+                            <div className="card-header">
+                                <Link to={`/user/${user.id}`}>
+                                    <ProfilePic
+                                        className="card-img-top"
+                                        firstname={user.firstname}
+                                        lastname={user.lastname}
+                                        imageUrl={user.image}
+                                    />
+                                </Link>
+                            </div>
+                            <div className="card-body">
+                                <h5 className="card-title">
+                                    {user.firstname} {user.lastname}
+                                </h5>
+                                <p className="card-text">{user.bio} </p>
+                            </div>
+
+                            <div className="card-footer">
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => dispatch(unFriend(user.id))}
+                                >
+                                    Unfriend
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+            </div>
         </div>
     );
 }

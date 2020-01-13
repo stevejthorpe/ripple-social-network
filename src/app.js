@@ -78,7 +78,7 @@ export default class App extends React.Component {
                         toggleUploader={this.toggleUploader}
                     />
 
-                    <div className="app">
+                    <div className="app container">
                         <Route
                             exact
                             path="/"

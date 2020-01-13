@@ -76,14 +76,21 @@ export class BioEditor extends React.Component {
     render() {
         if (this.state.editingMode) {
             return (
-                <div>
-                    <h1>I am in editing mode</h1>
+                <div className="card-body">
+                    <h4 className="display-4">
+                        {this.props.firstname} {this.props.lastname}
+                    </h4>
+                    <h5>Biography</h5>
+                    <p>Edit your bio</p>
+
                     <textarea
+                        className="form-control"
                         defaultValue={this.props.bio}
                         name="bio"
                         onChange={e => this.handleChange(e.target)}
                     />
                     <button
+                        className="btn btn-primary"
                         onClick={() => {
                             this.submitBio();
                         }}
@@ -94,15 +101,20 @@ export class BioEditor extends React.Component {
             );
         } else {
             return (
-                <div>
-                    <h1>
+                <div className="card-body">
+                    <h4 className="card-title">
                         {this.props.firstname} {this.props.lastname}
-                    </h1>
-                    <h3>Biography</h3>
-                    <p className="bio-box">{this.props.bio}</p>
-                    <button onClick={this.toggleEditingMode}>
-                        {this.state.buttonText}
-                    </button>
+                    </h4>
+                    <h5 className="card-text">Biography</h5>
+                    <span className="form-control">{this.props.bio}</span>
+                    <div className="card-footer">
+                        <button
+                            className="btn btn-primary"
+                            onClick={this.toggleEditingMode}
+                        >
+                            {this.state.buttonText}
+                        </button>
+                    </div>
                 </div>
             );
         }

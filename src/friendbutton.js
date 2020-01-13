@@ -76,7 +76,7 @@ export function FriendButton({ otherId }) {
 
     return (
         <div>
-            <button className="btn" onClick={submit}>
+            <button className="btn btn-primary" onClick={submit}>
                 {buttonText}
             </button>
         </div>

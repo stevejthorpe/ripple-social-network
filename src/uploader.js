@@ -37,20 +37,42 @@ export default class Uploader extends React.Component {
     }
     render() {
         return (
-            <div className="uploader">
-                <div className="uploader-box">
-                    <h4 className="close" onClick={this.props.toggleUploader}>
-                        X
-                    </h4>
-
-                    <h4>Upload your picture</h4>
-                    <div className="uploader-input"></div>
-                    <input
-                        type="file"
-                        accept="image/*"
-                        onChange={this.handleChange}
-                    />
-                    <button onClick={this.submitImg}>Upload</button>
+            <div className="uploader" tabIndex="-1" role="dialog">
+                <div
+                    className="modal-dialog modal-dialog-centered"
+                    role="document"
+                >
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Upload your picture</h5>
+                            <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={this.props.toggleUploader}
+                            >
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={this.handleChange}
+                                className="btn btn-secondary"
+                            />
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={this.submitImg}
+                            >
+                                Save changes
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

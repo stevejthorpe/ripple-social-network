@@ -12,24 +12,25 @@ export default class Header extends React.Component {
     render() {
         return (
             <>
-                <div className="header">
+                <div className="nav-bar navbar navbar-expand-sm navbar-light bg-light">
                     <img
-                        className="welcome-logo-small"
+                        className="img-thumbnail rounded float-left profile-pic-tiny"
                         src="/logo.png"
                         alt="logo"
                     />
-                    <p>
+                    <h1>
                         <em>r i p p l e</em>
-                    </p>
+                    </h1>
+
+                    <NavBar />
 
                     <img
-                        className="profile-pic-small"
+                        className="img-thumbnail rounded float-right profile-pic-tiny"
                         src={this.props.imageUrl}
                         alt="profile pic"
                         onClick={this.props.toggleUploader}
                     />
                 </div>
-                <NavBar />
             </>
         );
     }
