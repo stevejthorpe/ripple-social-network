@@ -10,6 +10,7 @@ export default class Register extends React.Component {
     }
 
     submit(e) {
+        console.log("submit event: ", e);
         e.preventDefault();
         axios
             .post("/register", {
@@ -44,78 +45,114 @@ export default class Register extends React.Component {
             [inputElement.name]: inputElement.value
         });
     }
-    // handleChange({ target }) {
-    //     this.setState({
-    //         [target.name]: target.value
-    //     });
-    // }
+
     render() {
         return (
-            <div>
-                <h3>Register now.</h3>
-                <form className="reg-form">
-                    {this.state.error && (
-                        <p className="error">
-                            Ooops! Something went wrong. Please try again.
-                        </p>
-                    )}
-                    <label htmlFor="firstname">
-                        Firstname:
-                        <input
-                            name="firstname"
-                            autoComplete="firtname"
-                            onChange={e => this.handleChange(e.target)}
-                        />
-                    </label>
-                    <label htmlFor="lastname">
-                        Lastname:
-                        <input
-                            name="lastname"
-                            autoComplete="lastname"
-                            onChange={e => this.handleChange(e.target)}
-                        />
-                    </label>
-                    <label htmlFor="email">
-                        Email:
-                        <input
-                            type="email"
-                            autoComplete="email"
-                            name="email"
-                            onChange={e => this.handleChange(e.target)}
-                        />
-                    </label>
-                    <label htmlFor="biography">
-                        Bio:
-                        <input
-                            autoComplete="biography"
-                            name="bio"
-                            onChange={e => this.handleChange(e.target)}
-                        />
-                    </label>
-                    <label htmlFor="password">
-                        Password:
-                        <input
-                            type="password"
-                            autoComplete="new-password"
-                            name="password"
-                            onChange={e => this.handleChange(e.target)}
-                        />
-                    </label>
+            <div className="card bg-light">
+                <article
+                    className="card-body mx-auto"
+                    style={{ maxWidth: "400px" }}
+                >
+                    <h5 className="card-title mt-3 text-center">
+                        Get started with your free account
+                    </h5>
 
-                    <button
-                        className="ripple"
-                        onClick={() => {
-                            this.submit();
-                        }}
-                    >
-                        Register
-                    </button>
-                </form>
-                <div>
-                    <p>
-                        Already a member? <Link to="/login">Login</Link>
-                    </p>
-                </div>
+                    <form className="form-group input-group">
+                        {this.state.error && (
+                            <p className="error">
+                                Ooops! Something went wrong. Please try again.
+                            </p>
+                        )}
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    {" "}
+                                    <i className="fa fa-user"></i>{" "}
+                                </span>
+                            </div>
+                            <input
+                                className="form-control"
+                                placeholder="Firstname"
+                                type="text"
+                                name="firstname"
+                                onChange={e => this.handleChange(e.target)}
+                            />
+                        </div>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    {" "}
+                                    <i className="fa fa-user"></i>{" "}
+                                </span>
+                            </div>
+                            <input
+                                className="form-control"
+                                placeholder="Lastname"
+                                type="text"
+                                name="lastname"
+                                onChange={e => this.handleChange(e.target)}
+                            />
+                        </div>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    {" "}
+                                    <i className="fa fa-envelope"></i>{" "}
+                                </span>
+                            </div>
+                            <input
+                                className="form-control"
+                                placeholder="Email"
+                                type="text"
+                                name="email"
+                                onChange={e => this.handleChange(e.target)}
+                            />
+                        </div>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    {" "}
+                                    <i className="fas fa-edit"></i>{" "}
+                                </span>
+                            </div>
+                            <input
+                                className="form-control"
+                                placeholder="Biography"
+                                type="text"
+                                name="bio"
+                                onChange={e => this.handleChange(e.target)}
+                            />
+                        </div>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    {" "}
+                                    <i className="fa fa-lock"></i>{" "}
+                                </span>
+                            </div>
+                            <input
+                                className="form-control"
+                                placeholder="Password"
+                                type="text"
+                                name="password"
+                                onChange={e => this.handleChange(e.target)}
+                            />
+                        </div>
+                        <button
+                            className="btn btn-primary"
+                            onClick={e => {
+                                this.submit(e);
+                            }}
+                        >
+                            Register
+                        </button>
+                    </form>
+                    <div>
+                        <p className="text-center">
+                            Already a member? <Link to="/login">Login</Link>
+                        </p>
+                    </div>
+                </article>
             </div>
         );
     }

@@ -10,10 +10,17 @@ export default class Welcome extends React.Component {
     }
     render() {
         return (
-            <div className="welcome-div">
-                <h1>Welcome to R I P P L E</h1>
-                <img className="welcome-logo" src="/logo.png" alt="logo" />
-                <p>Throw a pebble in the pond and make a ripple...</p>
+            <div className="container">
+                <div className="nav">
+                    <img
+                        className="profile-pic-small"
+                        src="/logo.png"
+                        alt="logo"
+                    />
+                    <h1>Welcome to R I P P L E</h1>
+                    <p>Throw a pebble in the pond and make a ripple...</p>
+                </div>
+
                 <HashRouter>
                     <div>
                         <Route exact path="/" component={Register} />
