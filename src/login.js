@@ -7,23 +7,7 @@ export default class Login extends React.Component {
         super(props);
         this.state = {};
     }
-    // async submit(e) {
-    //     e.preventDefault();
-    //     try {
-    //         const { data } = axios.post("/login", {
-    //             email: this.state.email,
-    //             password: this.state.password
-    //         });
-    //         console.log("This: ", this.state);
-    //
-    //         data ? location.replace("/") : this.setState({ error: true });
-    //     } catch (err) {
-    //         console.log("Login error: ", err);
-    //         this.setState({
-    //             error: true
-    //         });
-    //     }
-    // }
+
     submit(e) {
         e.preventDefault();
         // console.log("This: ", this.state);
@@ -62,54 +46,67 @@ export default class Login extends React.Component {
             [inputElement.name]: inputElement.value
         });
     }
-    // handleChange({ target }) {
-    //     this.setState({
-    //         [target.name]: target.value
-    //     });
-    // }
+
     render() {
         return (
-            <div>
-                <h3>login</h3>
-                {this.state.error && (
-                    <p className="error">
-                        Oops, something went wrong. Please try again.
-                    </p>
-                )}
+            <div className="card bg-light d-flex align-items-center">
+                <h2 className="card-title mt-3 text-center">log in</h2>
+                <article className="card-body mx-auto">
+                    {this.state.error && (
+                        <p className="error">
+                            Oops, something went wrong. Please try again.
+                        </p>
+                    )}
 
-                <form className="login-form">
-                    <label htmlFor="email">
-                        Email:
-                        <input
-                            type="email"
-                            autoComplete="email"
-                            name="email"
-                            onChange={e => this.handleChange(e.target)}
-                        />
-                    </label>
-                    <label htmlFor="password">
-                        Password:
-                        <input
-                            type="password"
-                            autoComplete="current-password"
-                            name="password"
-                            onChange={e => this.handleChange(e.target)}
-                        />
-                    </label>
-                    <button
-                        className="btn btn-primary"
-                        onClick={e => {
-                            this.submit(e);
-                        }}
-                    >
-                        Login
-                    </button>
-                </form>
-                <div>
-                    <p>
-                        Take me back to <Link to="/">registration</Link>
-                    </p>
-                </div>
+                    <div className="dropdown-divider"></div>
+
+                    <form className="form-group input-group">
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    {" "}
+                                    <i className="fa fa-envelope"></i>{" "}
+                                </span>
+                            </div>
+                            <input
+                                className="form-control"
+                                placeholder="Email"
+                                type="text"
+                                name="email"
+                                onChange={e => this.handleChange(e.target)}
+                            />
+                        </div>
+                        <div className="form-group input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">
+                                    {" "}
+                                    <i className="fa fa-lock"></i>{" "}
+                                </span>
+                            </div>
+                            <input
+                                className="form-control"
+                                placeholder="Password"
+                                type="text"
+                                name="password"
+                                onChange={e => this.handleChange(e.target)}
+                            />
+                        </div>
+
+                        <button
+                            className="btn btn-primary btn-block"
+                            onClick={e => {
+                                this.submit(e);
+                            }}
+                        >
+                            Login
+                        </button>
+                    </form>
+                    <div>
+                        <p className="text-center">
+                            Take me back to <Link to="/">registration</Link>
+                        </p>
+                    </div>
+                </article>
             </div>
         );
     }

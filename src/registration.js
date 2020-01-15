@@ -48,11 +48,26 @@ export default class Register extends React.Component {
 
     render() {
         return (
-            <div className="card bg-light">
+            <div className="card bg-light d-flex align-items-center">
                 <article
                     className="card-body mx-auto"
                     style={{ maxWidth: "400px" }}
                 >
+                    <h2 className="card-title mt-3 text-center">
+                        <em>R I P P L E</em>
+                    </h2>
+                    <div className="text-center">
+                        <img
+                            className="profile-pic-small"
+                            src="/logo.png"
+                            alt="logo"
+                        />
+                    </div>
+
+                    <h6 className="card-title mt-3 text-center">
+                        <em>Throw a pebble in the pond and make a ripple...</em>
+                    </h6>
+                    <div className="dropdown-divider"></div>
                     <h5 className="card-title mt-3 text-center">
                         Get started with your free account
                     </h5>
@@ -139,7 +154,7 @@ export default class Register extends React.Component {
                             />
                         </div>
                         <button
-                            className="btn btn-primary"
+                            className="btn btn-primary btn-block"
                             onClick={e => {
                                 this.submit(e);
                             }}
@@ -149,7 +164,7 @@ export default class Register extends React.Component {
                     </form>
                     <div>
                         <p className="text-center">
-                            Already a member? <Link to="/login">Login</Link>
+                            Already a member? <Link to="/login">Log in</Link>
                         </p>
                     </div>
                 </article>
