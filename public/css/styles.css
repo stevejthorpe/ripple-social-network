@@ -1,10 +1,10 @@
-* {
+/* * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 
     background: #f7fbfc;
-}
+} */
 
 .profile-pic-tiny {
     height: 50px;
@@ -13,17 +13,29 @@
     cursor: pointer;
 }
 
-.profile-pic-small {
+/* .profile-pic-small {
     height: 100px;
     width: 100px;
     object-fit: cover;
     cursor: pointer;
-}
+} */
 
-.profile-pic-medium {
-    height: 200px;
-    width: 200px;
+/* .profile-pic-medium {
+    height: auto;
+    width: 100%;
     padding: 0;
     margin: 0;
     object-fit: cover;
+} */
+
+.card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
+.card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 0.5rem;
 }

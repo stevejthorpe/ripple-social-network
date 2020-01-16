@@ -84,31 +84,6 @@ app.get("/welcome", function(req, res) {
 
 // REGISTER //
 
-// app.post("/register", async (req, res) => {
-//     const { firstname, lastname, email, bio, password } = req.body;
-//     try {
-//         let hashedPassword = await hash(password);
-//         let id = await db.addUser(
-//             firstname,
-//             lastname,
-//             email,
-//             bio,
-//             hashedPassword
-//         );
-//         req.session.userId = id;
-//
-//         res.json({
-//             success: true
-//         });
-//     } catch (err) {
-//         console.log("Error in POST /register: ", err);
-//         res.json({
-//             success: false,
-//             error: true
-//         });
-//     }
-// });
-
 app.post("/register", (req, res) => {
     console.log("POST register route");
     hash(req.body.password)
@@ -198,9 +173,9 @@ app.post("/login", async (req, res) => {
 // });
 
 // LOGOUT //
-app.get("/logout", function(req, res) {
+app.get("/logout", (req, res) => {
     req.session = null;
-    res.redirect("/welcome");
+    res.redirect("/");
 });
 
 // USER //

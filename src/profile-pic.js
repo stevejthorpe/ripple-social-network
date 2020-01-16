@@ -9,14 +9,14 @@ export default function ProfilePic({
     imageUrl = imageUrl || "/default-profile-pic.png";
 
     return (
-        <picture className="pic-box">
+        <div>
             <img
-                className="img-fluid img-thumbnail profile-pic-medium "
+                className="card-img-top"
                 src={imageUrl}
                 alt={`${firstname} ${lastname}`}
                 onClick={toggleUploader}
             />
-        </picture>
+        </div>
     );
 }
 

@@ -29,14 +29,13 @@ export default function Friends() {
 
     return (
         <div className="container">
-            <div className="row">
+            <div className="card-deck">
                 {wannabes &&
                     wannabes.map(user => (
-                        <div className="wannabes card w-25" key={user.id}>
-                            <div className="card-header">
+                        <div className="card" key={user.id}>
+                            <div>
                                 <Link to={`/user/${user.id}`}>
                                     <ProfilePic
-                                        className="card-img-top"
                                         firstname={user.firstname}
                                         lastname={user.lastname}
                                         imageUrl={user.image}
@@ -49,7 +48,7 @@ export default function Friends() {
                                 </h5>
                                 <p className="card-text">{user.bio} </p>
                             </div>
-                            <div className="card-body">
+                            <div className="card-footer text-right">
                                 <button
                                     className="btn btn-primary"
                                     onClick={() => dispatch(addFriend(user.id))}
@@ -60,29 +59,27 @@ export default function Friends() {
                         </div>
                     ))}
             </div>
-
-            <div className="row">
+            <div className="card-deck">
                 {friends &&
                     friends.map(user => (
-                        <div className="friends card w-25" key={user.id}>
-                            <div className="card-header">
+                        <div className="card" key={user.id}>
+                            <div>
                                 <Link to={`/user/${user.id}`}>
                                     <ProfilePic
-                                        className="card-img-top"
                                         firstname={user.firstname}
                                         lastname={user.lastname}
                                         imageUrl={user.image}
                                     />
                                 </Link>
                             </div>
+
                             <div className="card-body">
                                 <h5 className="card-title">
                                     {user.firstname} {user.lastname}
                                 </h5>
                                 <p className="card-text">{user.bio} </p>
                             </div>
-
-                            <div className="card-footer">
+                            <div className="card-footer text-right">
                                 <button
                                     className="btn btn-primary"
                                     onClick={() => dispatch(unFriend(user.id))}
@@ -96,8 +93,3 @@ export default function Friends() {
         </div>
     );
 }
-
-// <img
-//     src={user.image}
-//     onClick={() => location.replace(`/user/${user.id}`)}
-// />

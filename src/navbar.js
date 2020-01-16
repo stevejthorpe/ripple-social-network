@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import OnlineUsers from "./online-users";
-
 import { useSelector } from "react-redux";
 
-export default function NavBar() {
+// import ProfilePic from "./profile-pic";
+// import NavBar from "./navbar";
+
+const Header = props => {
     const onlineUsers = useSelector(state => state && state.onlineUsersArr);
-    console.log("OnlineUsersArr in component: ", onlineUsers);
+    const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+    const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
 
     let total = 0;
 
@@ -17,39 +19,77 @@ export default function NavBar() {
     }
 
     return (
-        <nav className="nav navbar navbar-expand-sm navbar-light bg-light justify-content-center">
-            <ul className="navbar-nav">
-                <li className="nav-item">
+        <div>
+            <nav className="navbar navbar-expand-md">
+                <a
+                    className="navbar-brand"
+                    href="https://github.com/stevejthorpe/ripple-social-network"
+                >
+                    <img
+                        className="img-thumbnail rounded float-left profile-pic-tiny"
+                        src="/logo.png"
+                        alt="ripple logo"
+                    />
+                </a>
+
+                <h1>
+                    <em className="">r i p p l e</em>
+                </h1>
+
+                <button
+                    className="custom-toggler navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navBarContent"
+                    aria-controls="navBarContent"
+                    aria-expanded={!isNavCollapsed ? true : false}
+                    aria-label="Toggle navigation"
+                    onClick={handleNavCollapse}
+                >
+                    <i className="fas fa-bars"></i>
+                </button>
+
+                <div
+                    className={`${
+                        isNavCollapsed ? "collapse" : ""
+                    } navbar-collapse`}
+                    id="navBarContent"
+                >
                     <Link className="nav-link" to="/friends">
                         Friends
                     </Link>
-                </li>
-                <li className="nav-item">
                     <Link className="nav-link" to="/chat">
                         Chat
                     </Link>
-                </li>
-                <li className="nav-item">
                     <Link className="nav-link" to="/newusers">
                         Find Users
                     </Link>
-                </li>
-                <li className="nav-item">
                     <Link className="nav-link" to="/">
                         Profile
                     </Link>
-                </li>
-                <li className="nav-item">
                     <Link className="nav-link" to="/onlineusers">
-                        {total} Online Users
+                        {total} <i className="fas fa-users"></i>
                     </Link>
-                </li>
-                <li className="nav-item">
                     <Link className="nav-link" to="/logout">
                         Logout
                     </Link>
-                </li>
-            </ul>
-        </nav>
+                    <ul className="navbar-nav ml-auto nav-flex-icons">
+                        <li className="nav-item avatar">
+                            <a className="nav-link p-0" href="#">
+                                <img
+                                    className="rounded-circle z-depth-0"
+                                    src={props.imageUrl}
+                                    alt="avatar image"
+                                    onClick={props.toggleUploader}
+                                    height="40"
+                                />
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
     );
-}
+};
+
+export default Header;
