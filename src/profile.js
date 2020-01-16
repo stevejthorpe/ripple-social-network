@@ -8,18 +8,17 @@ import { BioEditor } from "./bio-editor";
 export function Profile(props) {
     console.log("props in profile: ", props);
     return (
-        <div className="card mb-3">
-            <div className="row no-gutters">
-                <div className="col-md-3">
+        <div className="container">
+            <div className="card">
+                <div className="">
                     <ProfilePic
-                        className="card-img"
                         firstname={props.firstname}
                         lastname={props.lastname}
                         imageUrl={props.imageUrl}
                         onClick={props.toggleUploader}
                     />
                 </div>
-                <div className="col-md-4">
+                <div className="card-body">
                     <BioEditor
                         firstname={props.firstname}
                         lastname={props.lastname}

@@ -76,8 +76,8 @@ export class BioEditor extends React.Component {
     render() {
         if (this.state.editingMode) {
             return (
-                <div className="card-body">
-                    <h4 className="display-4">
+                <div className="">
+                    <h4 className="">
                         {this.props.firstname} {this.props.lastname}
                     </h4>
                     <h5>Biography</h5>
@@ -101,13 +101,13 @@ export class BioEditor extends React.Component {
             );
         } else {
             return (
-                <div className="card-body">
-                    <h4 className="card-title">
+                <div className="">
+                    <h4 className="">
                         {this.props.firstname} {this.props.lastname}
                     </h4>
                     <h5 className="card-text">Biography</h5>
                     <span className="form-control">{this.props.bio}</span>
-                    <div className="card-footer">
+                    <div className="">
                         <button
                             className="btn btn-primary"
                             onClick={this.toggleEditingMode}

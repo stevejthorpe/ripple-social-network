@@ -35,44 +35,42 @@ export default function FindPeople() {
     }, [searchUser]);
 
     return (
-        <div className="find-users">
-            <h3>Find people</h3>
-            <input onChange={e => setSearchUser(e.target.value)} />
-            {usersArr.map(user => (
-                <div className="new-users" key={user.id}>
-                    <ProfilePic
-                        firstname={user.firstname}
-                        lastname={user.lastname}
-                        imageUrl={user.image}
-                    />
-                    <h3>
-                        {user.firstname} {user.lastname}
-                    </h3>
-                    <Link to={"/user/" + user.id}>Go to profile</Link>
-                </div>
-            ))}
+        <div className="container">
+            <div className="form">
+                <i className="fas fa-search" aria-hidden="true"></i>
+                <input
+                    className="form-control form-control-sm ml-3 w-75"
+                    type="text"
+                    placeholder="Find friends"
+                    aria-label="Search"
+                    onChange={e => setSearchUser(e.target.value)}
+                />
+            </div>
+
+            <div className="card-deck">
+                {usersArr.map(user => (
+                    <div className="card" key={user.id}>
+                        <ProfilePic
+                            firstname={user.firstname}
+                            lastname={user.lastname}
+                            imageUrl={user.image}
+                        />
+                        <div className="card-body">
+                            <h3 className="card-title">
+                                {user.firstname} {user.lastname}
+                            </h3>
+                            <p>{user.bio}</p>
+                        </div>
+
+                        <div className="card-footer">
+                            <p>
+                                Visit {user.firstname}&apos;s{" "}
+                                <Link to={"/user/" + user.id}>profile</Link>
+                            </p>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
-
-// {
-//     usersArr.map(user => (
-//         <div className="existing-users" key={user.id}>
-//             <h3>
-//                 {user.firstname} {user.lastname}
-//             </h3>
-//             <p>
-//                 <em>Member Since:</em>
-//                 {new Date(user.created_at).toLocaleString()}
-//             </p>
-//             <Link to={`/user/${user.id}`}>
-//                 <ProfilePic
-//                     firstname={user.firstname}
-//                     lastname={user.lastname}
-//                     imageUrl={user.imageUrl}
-//                 />
-//             </Link>
-//         </div>
-//     ));
-// }
-// <Link to={`/users/${user.id}`}>
