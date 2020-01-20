@@ -68,7 +68,7 @@ const Header = props => {
                         Profile
                     </Link>
                     <Link className="nav-link" to="/onlineusers">
-                        {total} <i className="fas fa-users"></i>
+                        <span className="badge badge-info">{total}</span> <i className="fas fa-users"></i>
                     </Link>
                     <Link className="nav-link" to="/logout">
                         Logout

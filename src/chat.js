@@ -28,7 +28,7 @@ export default function Chat() {
         <div className="card bg-light lighten-10 chat-room">
             <div className="card-body" ref={elemRef}>
                 <div className="row px-lg-2 px-2">
-                    <div className="col-md-6 col-xl-4 px-0 bg-white">
+                    <div className="col-md-6 col-xl-4 px-0 bg-info">
                         <h6 className="font-weight-bold mb-3 text-center text-lg-left">
                             Onine Members
                         </h6>
@@ -153,3 +153,7 @@ export default function Chat() {
 // />
 
 // alt=`{item.firstname} {item.lastname}`
+
+
+
+
