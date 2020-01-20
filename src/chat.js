@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { socket } from "./socket";
 import { useSelector } from "react-redux";
+import moment from "moment";
 
 export default function Chat() {
     const elemRef = useRef();
@@ -31,76 +32,80 @@ export default function Chat() {
         <div className="card bg-light lighten-10 chat-room">
             <div className="card-body" ref={elemRef}>
                 <div className="row px-lg-2 px-2">
-                    <div className="col-md-6 col-xl-4 px-0 bg-white">
+                    <div className="col-md-6 col-xl-4 bg-white">
                         <h6 className="font-weight-bold mb-3 text-center text-lg-left">
                             Onine Members
                         </h6>
-                       <div className="white z-depth-1 px-3 pt-3 pb-0 bg-light">
-                        {onlineUsers &&
-                            onlineUsers.map(item => (
-                               
-                                <ul className="list-unstyled friend-list" key={item.id}>
+                        <div className="white z-depth-1 px-3 pt-3 pb-0 bg-light">
+                            {onlineUsers &&
+                                onlineUsers.map(item => (
+                                    <ul
+                                        className="list-unstyled friend-list"
+                                        key={item.id}
+                                    >
                                         <li className="active grey lighten-3 p-2">
-                                            <a
-                                                href="#"
-                                                className="d-flex justify-content-between"
+                                            <Link
+                                                to={`/user/${item.id}`}
+                                                className="d-flex justify-content-start"
                                             >
-                                                
-                                              <Link to={`/user/${item.id}`}>
                                                 <img
-                                                  className="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1 profile-pic-tiny"
-                                                  src={item.image}
+                                                    className="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1 profile-pic-tiny"
+                                                    src={item.image}
                                                 />
-                                              </Link>
+
                                                 <div className="text-small">
-                                                  <strong>{item.firstname} {item.lastname}</strong>
+                                                    <strong>
+                                                        {item.firstname}{" "}
+                                                        {item.lastname}
+                                                    </strong>
                                                     <p className="last-message text-muted">
-                                                      {item.bio}
+                                                        {item.bio}
                                                     </p>
                                                 </div>
-                                                <div className="chat-footer">
-                                                    <p className="text-smaller text-muted mb-0">
-                                                        Just now
-                                                    </p>
-                                                   
-                                                </div>
-                                            </a>
+                                            </Link>
                                         </li>
                                     </ul>
-                               
-                            ))}
-         </div>
+                                ))}
+                        </div>
                     </div>
-                    <div className="col-md-6 col-xl-8 pl-md-3 px-lg-auto px-0 bg-white">
-                        <div className="chat-message"></div>
-                        {msgs &&
-                            msgs.map(item => (
-                                <ul className="list-unstyled" key={item.id}>
-                                    <li className="d-flex justify-content-end mb-4 bg-light">
-                                        <Link to={`/user/${item.id}`}>
-                                            <img
-                                                className="profile-pic-tiny rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1"
-                                                src={item.image}
-                                            />
-                                        </Link>
-                                        <div className="chat-body white p-3 ml-2 z-depth-1">
-                                            <div className="header">
-                                                <strong className="primary-font">
-                                                    {item.firstname}{" "}
-                                                    {item.lastname}{" "}
-                                                </strong>
-                                                <small className="pull-right text-muted">
-                                                    <i className="far fa-clock"></i>
-                                                    {item.created_at}
-                                                </small>
-                                            </div>
-                                            <hr className="w-100" />
+                    <div className="col-md-6 col-xl-8 pl-md-3 px-lg-auto bg-white">
+                        <h6 className="font-weight-bold mb-3 text-center text-lg-left">
+                            Chat
+                        </h6>
+                        <div className="white z-depth-1 px-3 pt-3 pb-0 bg-light">
+                            {msgs &&
+                                msgs.map(item => (
+                                    <ul className="list-unstyled" key={item.id}>
+                                        <li className="d-flex justify-content-start mb-4 bg-light">
+                                            <Link to={`/user/${item.id}`}>
+                                                <img
+                                                    className="profile-pic-tiny rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1"
+                                                    src={item.image}
+                                                />
+                                            </Link>
+                                            <div className="chat-body white p-3 ml-2 z-depth-1">
+                                                <div className="header">
+                                                    <strong className="primary-font">
+                                                        {item.firstname}{" "}
+                                                        {item.lastname}{" "}
+                                                    </strong>
+                                                    <small className="pull-right text-muted">
+                                                        <i className="far fa-clock"></i>{" "}
+                                                        {moment(item.created_at)
+                                                            .startOf("hour")
+                                                            .fromNow()}
+                                                    </small>
+                                                </div>
+                                                <hr className="w-100" />
 
-                                            <p className="mb-0">{item.msg}</p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            ))}
+                                                <p className="mb-0">
+                                                    {item.msg}
+                                                </p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                ))}
+                        </div>
                         <li className="white list-unstyled">
                             <div className="form-group basic-textarea">
                                 <textarea
