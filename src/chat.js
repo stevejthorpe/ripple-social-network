@@ -11,6 +11,9 @@ export default function Chat() {
     const msgs = useSelector(state => state && state.msgs);
     console.log("Chat messages: ", msgs);
 
+    const onlineUsers = useSelector(state => state && state.onlineUsersArr);
+    console.log("Online users: ", onlineUsers);
+
     useEffect(() => {
         elemRef.current.scrollTop =
             elemRef.current.scrollHeight - elemRef.current.clientHeight;
@@ -28,76 +31,52 @@ export default function Chat() {
         <div className="card bg-light lighten-10 chat-room">
             <div className="card-body" ref={elemRef}>
                 <div className="row px-lg-2 px-2">
-                    <div className="col-md-6 col-xl-4 px-0 bg-info">
+                    <div className="col-md-6 col-xl-4 px-0 bg-white">
                         <h6 className="font-weight-bold mb-3 text-center text-lg-left">
                             Onine Members
                         </h6>
-                        <div className="white z-depth-1 px-3 pt-3 pb-0">
-                            <ul className="list-unstyled friend-list">
-                                <li className="active grey lighten-3 p-2">
-                                    <a
-                                        href="#"
-                                        className="d-flex justify-content-between"
-                                    >
-                                        <img
-                                            src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg"
-                                            alt="avatar"
-                                            className="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1"
-                                        />
-                                        <div className="text-small">
-                                            <strong>John Doe</strong>
-                                            <p className="last-message text-muted">
-                                                Hello, Are you there?
-                                            </p>
-                                        </div>
-                                        <div className="chat-footer">
-                                            <p className="text-smaller text-muted mb-0">
-                                                Just now
-                                            </p>
-                                            <span className="badge badge-danger float-right">
-                                                1
-                                            </span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li className="p-2">
-                                    <a
-                                        href="#"
-                                        className="d-flex justify-content-between"
-                                    >
-                                        <img
-                                            src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1.jpg"
-                                            alt="avatar"
-                                            className="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1"
-                                        />
-                                        <div className="text-small">
-                                            <strong>Danny Smith</strong>
-                                            <p className="last-message text-muted">
-                                                Lorem ipsum dolor sit.
-                                            </p>
-                                        </div>
-                                        <div className="chat-footer">
-                                            <p className="text-smaller text-muted mb-0">
-                                                5 min ago
-                                            </p>
-                                            <span className="text-muted float-right">
-                                                <i
-                                                    className="fas fa-mail-reply"
-                                                    aria-hidden="true"
-                                                ></i>
-                                            </span>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                       <div className="white z-depth-1 px-3 pt-3 pb-0 bg-light">
+                        {onlineUsers &&
+                            onlineUsers.map(item => (
+                               
+                                <ul className="list-unstyled friend-list" key={item.id}>
+                                        <li className="active grey lighten-3 p-2">
+                                            <a
+                                                href="#"
+                                                className="d-flex justify-content-between"
+                                            >
+                                                
+                                              <Link to={`/user/${item.id}`}>
+                                                <img
+                                                  className="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1 profile-pic-tiny"
+                                                  src={item.image}
+                                                />
+                                              </Link>
+                                                <div className="text-small">
+                                                  <strong>{item.firstname} {item.lastname}</strong>
+                                                    <p className="last-message text-muted">
+                                                      {item.bio}
+                                                    </p>
+                                                </div>
+                                                <div className="chat-footer">
+                                                    <p className="text-smaller text-muted mb-0">
+                                                        Just now
+                                                    </p>
+                                                   
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                               
+                            ))}
+         </div>
                     </div>
                     <div className="col-md-6 col-xl-8 pl-md-3 px-lg-auto px-0 bg-white">
                         <div className="chat-message"></div>
                         {msgs &&
                             msgs.map(item => (
                                 <ul className="list-unstyled" key={item.id}>
-                                    <li className="d-flex justify-content-between mb-4">
+                                    <li className="d-flex justify-content-end mb-4 bg-light">
                                         <Link to={`/user/${item.id}`}>
                                             <img
                                                 className="profile-pic-tiny rounded-circle mr-2 ml-lg-3 ml-0 z-depth-1"
@@ -122,7 +101,7 @@ export default function Chat() {
                                     </li>
                                 </ul>
                             ))}
-                        <li className="white">
+                        <li className="white list-unstyled">
                             <div className="form-group basic-textarea">
                                 <textarea
                                     className="form-control pl-2 my-0"
@@ -153,7 +132,3 @@ export default function Chat() {
 // />
 
 // alt=`{item.firstname} {item.lastname}`
-
-
-
-
