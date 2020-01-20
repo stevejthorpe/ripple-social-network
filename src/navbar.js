@@ -77,7 +77,7 @@ const Header = props => {
                         <li className="nav-item avatar">
                             <a className="nav-link p-0" href="#">
                                 <img
-                                    className="rounded-circle z-depth-0"
+                                    className="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1 profile-pic-tin"
                                     src={props.imageUrl}
                                     alt="avatar image"
                                     onClick={props.toggleUploader}

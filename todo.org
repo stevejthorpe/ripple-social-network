@@ -1,0 +1,38 @@
+* Inbox
+** TODO Fix image size
+SCHEDULED: <2020-01-20 Mon 11:00>
+:PROPERTIES:
+:ID:       22B13693-0F6A-4E33-A90A-1178F7945E6D
+:END:
+
+[[file:~/code/ripple-social-network/src/chat.js::import React, { useEffect, useRef } from "react";]]
+** TODO Check toto's
+SCHEDULED: <2020-01-19 Sun>
+:PROPERTIES:
+:ID:       F95F4EE7-E29F-4599-87E4-3C49A8FD0112
+:END:
+
+[[file:~/code/ripple-social-network/src/chat.js::import React, { useEffect, useRef } from "react";]]
+** TODO Fix avatar shape
+SCHEDULED: <2020-01-20 Mon>
+:PROPERTIES:
+:ID:       B7AD02C1-6447-4C8D-97BB-FBED802FD517
+:END:
+
+[[file:~/code/ripple-social-network/src/chat.js::import React, { useEffect, useRef } from "react";]]
+** TODO Fix update of bio
+SCHEDULED: <2020-01-20 Mon>
+:PROPERTIES:
+:ID:       ED14622A-CEEB-4A9B-AAFC-8F946D568109
+:END:
+
+
+[[file:~/code/ripple-social-network/src/chat.js::import React, { useEffect, useRef } from "react";]]
+** TODO [#A] Sort out image sizes
+SCHEDULED: <2020-01-20 Mon>
+:PROPERTIES:
+:ID:       1ED3E519-169A-41BF-945B-A04C1CAA1270
+:END:
+
+
+[[file:~/code/ripple-social-network/src/chat.js::import React, { useEffect, useRef } from "react";]]
