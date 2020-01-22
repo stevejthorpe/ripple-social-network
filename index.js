@@ -12,9 +12,13 @@ const { s3Url } = require("./config.json");
 const moment = require("moment");
 // Socket.io
 const server = require("http").Server(app);
+// const io = require("socket.io")(server, {
+//     origins:
+//         "localhost:8080 http://ripple-social-network.herokuapp.com/ https://ripple-social-network.herokuapp.com/"
+// });
+
 const io = require("socket.io")(server, {
-    origins:
-        "localhost:8080 http://ripple-social-network.herokuapp.com/ https://ripple-social-network.herokuapp.com/"
+    origins: "*:*"
 });
 
 let onlineUsers = [];
