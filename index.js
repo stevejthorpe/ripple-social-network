@@ -12,7 +12,9 @@ const { s3Url } = require("./config.json");
 const moment = require("moment");
 // Socket.io
 const server = require("http").Server(app);
-const io = require("socket.io")(server, { origins: "localhost:8080" });
+const io = require("socket.io")(server, {
+    origins: "https://ripple-social-network.herokuapp.com/" || "localhost:8080"
+});
 
 let onlineUsers = [];
 
@@ -417,7 +419,10 @@ io.on("connection", async socket => {
     });
     console.log("onlineUsers: ", onlineUsers);
 
-    console.log("Test onlineUsers map: ", onlineUsers.map(id => id.userId));
+    console.log(
+        "Test onlineUsers map: ",
+        onlineUsers.map(id => id.userId)
+    );
 
     // Chat message stuff
     // Make db query for last 10 chat chatMessages
