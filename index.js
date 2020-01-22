@@ -13,7 +13,8 @@ const moment = require("moment");
 // Socket.io
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
-    origins: "https://ripple-social-network.herokuapp.com/" || "localhost:8080"
+    origins:
+        "localhost:8080 http://ripple-social-network.herokuapp.com/ https://ripple-social-network.herokuapp.com/"
 });
 
 let onlineUsers = [];
