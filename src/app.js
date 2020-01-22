@@ -63,7 +63,7 @@ export default class App extends React.Component {
             return null;
         }
         return (
-            <div className="outer">
+            <div className="outer container">
                 {this.state.uploaderIsVisible && (
                     <Uploader
                         updateImg={this.updateImg}
@@ -71,15 +71,14 @@ export default class App extends React.Component {
                     />
                 )}
                 <BrowserRouter>
-                    <NavBar
-                        id={this.state.id}
-                        imageUrl={this.state.imageUrl}
-                        firstname={this.state.firstname}
-                        lastname={this.state.lastname}
-                        toggleUploader={this.toggleUploader}
-                    />
-
                     <div className="app container">
+                        <NavBar
+                            id={this.state.id}
+                            imageUrl={this.state.imageUrl}
+                            firstname={this.state.firstname}
+                            lastname={this.state.lastname}
+                            toggleUploader={this.toggleUploader}
+                        />
                         <Route
                             exact
                             path="/"
