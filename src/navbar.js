@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 // import ProfilePic from "./profile-pic";
 // import NavBar from "./navbar";
 
-const Header = props => {
+const NavBar = props => {
     const onlineUsers = useSelector(state => state && state.onlineUsersArr);
     const [isNavCollapsed, setIsNavCollapsed] = useState(true);
     const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
@@ -68,7 +68,8 @@ const Header = props => {
                         Profile
                     </Link>
                     <Link className="nav-link" to="/onlineusers">
-                        <span className="badge badge-info">{total}</span> <i className="fas fa-users"></i>
+                        <span className="badge badge-info">{total}</span>{" "}
+                        <i className="fas fa-users"></i>
                     </Link>
                     <Link className="nav-link" to="/logout">
                         Logout
@@ -92,4 +93,4 @@ const Header = props => {
     );
 };
 
-export default Header;
+export default NavBar;
